@@ -24,18 +24,23 @@ using namespace std;
 int main(int argc, char** argv) {
     stack <Container> zasobnik;
     
+ 
+    
     Container *test = new Container(10,10);
     Container * best;
     Souradnice s(2,2);
     test->setX(s,8);
-    test->setX(Souradnice(1,1),1);
-    test->setX(Souradnice(1,3),1);
-    test->setX(Souradnice(3,1),1);
-    test->setX(Souradnice(3,2),1);
-    test->setX(Souradnice(1,2),1);
-    test->setX(Souradnice(3,3),1);
-    
-    test->print();
+    Souradnice sv(5,7);
+    test->setX(sv,4);
+    Souradnice *s2 = new Souradnice(-1,-1);
+    for(int i = 0; i < 10; i ++){
+        s2 = randSouradnice(10,s2); 
+        int ** pole = test->getPole();
+        if(pole[s2->x][s2->y] == 0)
+          test->setX(Souradnice(s2->x,s2->y),1);
+        else i--;
+    }  
+    test->print();/*
     Souradnice * found = new Souradnice[2];
     found = hledejVRadku(s,test,found);
     cout  << "v radku" << endl;
@@ -66,13 +71,45 @@ int main(int argc, char** argv) {
         if(jeVeSloupciFigurka(i,test)) cout << "je ";
         else cout << "neni ";
         cout << "figurka" << endl;
-    }
-    Souradnice *s2 = new Souradnice(-1,-1);
-    for(int i = 0; i < 10; i ++){
-        s2 = randSouradnice(10,s2);        
-        test->setX(Souradnice(s2->x,s2->y),1);
-    }
-    test->print();
+    }*/
+    
+    cout << "kralovna: " ;
+    Souradnice sk = najdiKralovnu(test);
+    sk.print();
+    Souradnice * found = new Souradnice[2];
+    found = hledejVRadku(sk,test,found);
+    cout  << "v radku" << endl;
+    found[0].print();
+    found[1].print();
+    found = hledejVsloupci(sk,test,found);
+    cout  << "v sloupci" << endl;
+    found[0].print();
+    found[1].print();
+    found = hledejSikmo1(sk,test,found);
+    cout  << "sikmo \\" << endl;
+    found[0].print();
+    found[1].print();
+    found = hledejSikmo2(sk,test,found);
+    cout  << "sikmo /" << endl;
+    found[0].print();
+    found[1].print();
+    
+    cout << "vez: " ;
+    sv = najdiVez(test);
+    sv.print();
+    found = hledejVRadku(sv,test,found);
+    cout  << "v radku" << endl;
+    found[0].print();
+    found[1].print();
+    found = hledejVsloupci(sv,test,found);
+    cout  << "v sloupci" << endl;
+    found[0].print();
+    found[1].print();
+
+    
+    
+    
+
     
     
     // init 
