@@ -4,16 +4,43 @@
 #include <cstdlib>
 using namespace std;
 
+
+
+
+
+
 int randInt(int max = 10){
-    //srand((unsigned)time(0)); 
+    //srand((unsigned)time(NULL)); 
     int r = rand(); 
     return r % max; 
 }
 
 Souradnice * randSouradnice(int max, Souradnice *s ){
+    
     s->x = randInt(max);
     s->y = randInt(max);
     return s;
+}
+
+Souradnice najdiVez(Container *c){
+    int n = c->getSize();
+    int ** pole = c->getPole();
+    int fig = 4;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            if(pole[i][j] == fig) return Souradnice(i,j);
+        }
+    }
+}
+Souradnice  najdiKralovnu(Container *c){
+    int n = c->getSize();
+    int ** pole = c->getPole();
+    int fig = 8;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            if(pole[i][j] == fig) return Souradnice(i,j);
+        }
+    }
 }
 
 void presunFigurku(Souradnice s, Souradnice origin, int fig, Container * c){
