@@ -11,6 +11,8 @@
 
 int randInt(int max);
 Souradnice * randSouradnice(int size, Souradnice * s);
+Souradnice najdiVez(Container *c);
+Souradnice najdiKralovnu(Container *c);
 void presunFigurku(Souradnice s, Souradnice origin, int fig, Container * c);
 bool jeVeSloupciFigurka(int s, Container * c);
 bool jeVRadkuFigurka(int r, Container * c);
