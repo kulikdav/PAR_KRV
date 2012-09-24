@@ -7,6 +7,7 @@
 
 #include "Container.h"
 #include <iostream>
+
 using namespace std;
 
 Container::Container() {
@@ -46,4 +47,8 @@ void Container::print(){
          }
          cout << endl;
      }
+}
+
+void Container::setX(Souradnice s, int fig){
+    pole[s.x][s.y] = fig;
 }

@@ -5,17 +5,27 @@
  * Created on September 24, 2012, 11:58 AM
  */
 
+
 #ifndef CONTAINER_H
 #define	CONTAINER_H
 
+  struct Souradnice{
+    int x;
+    int y;
+};
+
 class Container {
 public:
+    
+  
+    
     Container();
     Container(int n, int k);
     Container(const Container& orig);
     virtual ~Container();
     
     void print();
+    void setX(Souradnice s, int fig);
     
 private:
     int n;

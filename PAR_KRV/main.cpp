@@ -7,6 +7,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <stack>
 #include "Container.h"
 
 using namespace std;
@@ -14,10 +15,17 @@ using namespace std;
 /*
  * 
  */
+
+
+
 int main(int argc, char** argv) {
     stack <Container> zasobnik;
-    Container *test = new Container(5,0);
+    Container *test = new Container(5,10);
     Container * best;
+    Souradnice s;
+    s.x = 0;
+    s.y = 0;
+    test->setX(s,5);
     test->print();
     
     // init 
@@ -50,4 +58,3 @@ int main(int argc, char** argv) {
     
     
 }
-
