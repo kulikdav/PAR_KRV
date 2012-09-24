@@ -34,6 +34,16 @@
         <compilerSet>default</compilerSet>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>../../../../../../Program Files (x86)/MPICH2/include</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>../../../../../../Program Files (x86)/MPICH2/lib</pElem>
+          </linkerAddLib>
+        </linkerTool>
       </compileType>
     </conf>
     <conf name="Release" type="1">
