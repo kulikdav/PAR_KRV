@@ -10,7 +10,7 @@ using namespace std;
 
 
 int randInt(int max = 10){
-    //srand((unsigned)time(NULL)); 
+    srand((unsigned)time(NULL)); 
     int r = rand(); 
     return r % max; 
 }
@@ -82,7 +82,10 @@ Souradnice * hledejSikmo1(Souradnice s, Container * c, Souradnice * f){
         int i = x-1;
         int j = y-1;
         while( i >= 0 && j >= 0){  
-       //     cout << "[" << i << "," << j << "]" << endl;    
+       //     cout << "[" << i << "," << j << "]" << endl;  
+            if(pole[i][j] == 4){
+                break;
+            }
             if(pole[i][j] == 1){
                 f[0] = Souradnice(i,j);
                 break;
@@ -96,7 +99,11 @@ Souradnice * hledejSikmo1(Souradnice s, Container * c, Souradnice * f){
         int j = y+1;
         while( i < n && j < n){  
      //       cout << "[" << i << "," << j << "]" << endl;    
+            if(pole[i][j] == 4){
+                break;
+            }
             if(pole[i][j] == 1){
+                
                 f[1] = Souradnice(i,j);
                 break;
             }
@@ -122,6 +129,9 @@ Souradnice * hledejSikmo2(Souradnice s, Container * c, Souradnice * f){
         int j = y-1;
         while( i < n && j >= 0){  
             //cout << "[" << i << "," << j << "]" << endl;    
+            if(pole[i][j] == 4){
+                break;
+            }
             if(pole[i][j] == 1){
                 f[0] = Souradnice(i,j);
                 break;
@@ -135,6 +145,9 @@ Souradnice * hledejSikmo2(Souradnice s, Container * c, Souradnice * f){
         int j = y+1;
         while( j < n && i >= 0){  
             //cout << "[" << i << "," << j << "]" << endl;    
+            if(pole[i][j] == 4){
+                break;
+            }
             if(pole[i][j] == 1){
                 f[1] = Souradnice(i,j);
                 break;
@@ -157,6 +170,9 @@ Souradnice * hledejVRadku(Souradnice s, Container * c, Souradnice * f){
     // vlevo
     if(y > 0){
     for(int i = y-1; i >= 0; i--){
+        if(pole[x][i] == 8){
+            break;
+        }
         if(pole[x][i] == 1){
             Souradnice d(x,i);
             f[0] = d;
@@ -168,6 +184,9 @@ Souradnice * hledejVRadku(Souradnice s, Container * c, Souradnice * f){
     // vpravo
     if(y < (n-1)){
       for(int i = y+1; i < n; i++){
+          if(pole[x][i] == 8){
+              break;
+          }
           if(pole[x][i] == 1){
             Souradnice d(x,i);
             f[1] = d;
