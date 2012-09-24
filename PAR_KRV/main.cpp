@@ -23,17 +23,18 @@ using namespace std;
 
 int main(int argc, char** argv) {
     stack <Container> zasobnik;
-    
+    int k = 2;
  
     
     Container *test = new Container(10,10);
     Container * best;
     Souradnice s(2,2);
     test->setX(s,8);
-    Souradnice sv(5,7);
+    test->setX(Souradnice(4,4),1);
+    Souradnice sv(3,3);
     test->setX(sv,4);
     Souradnice *s2 = new Souradnice(-1,-1);
-    for(int i = 0; i < 10; i ++){
+    for(int i = 0; i < k; i ++){
         s2 = randSouradnice(10,s2); 
         int ** pole = test->getPole();
         if(pole[s2->x][s2->y] == 0)
@@ -58,7 +59,7 @@ int main(int argc, char** argv) {
     cout  << "sikmo /" << endl;
     found[0].print();
     found[1].print();
-   
+   */
     for(int i = 0; i < 5; i++){
         cout << "v " << i << " radku ";
         if(jeVRadkuFigurka(i,test)) cout << "je ";
@@ -71,7 +72,7 @@ int main(int argc, char** argv) {
         if(jeVeSloupciFigurka(i,test)) cout << "je ";
         else cout << "neni ";
         cout << "figurka" << endl;
-    }*/
+    }
     
     cout << "kralovna: " ;
     Souradnice sk = najdiKralovnu(test);
