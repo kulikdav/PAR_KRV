@@ -9,6 +9,7 @@
 #include <iostream>
 #include <stack>
 #include "Container.h"
+#include "common.h"
 
 using namespace std;
 
@@ -18,15 +19,61 @@ using namespace std;
 
 
 
+
+
 int main(int argc, char** argv) {
     stack <Container> zasobnik;
-    Container *test = new Container(5,10);
+    
+    Container *test = new Container(10,10);
     Container * best;
-    Souradnice s;
-    s.x = 0;
-    s.y = 0;
-    test->setX(s,5);
+    Souradnice s(2,2);
+    test->setX(s,8);
+    test->setX(Souradnice(1,1),1);
+    test->setX(Souradnice(1,3),1);
+    test->setX(Souradnice(3,1),1);
+    test->setX(Souradnice(3,2),1);
+    test->setX(Souradnice(1,2),1);
+    test->setX(Souradnice(3,3),1);
+    
     test->print();
+    Souradnice * found = new Souradnice[2];
+    found = hledejVRadku(s,test,found);
+    cout  << "v radku" << endl;
+    found[0].print();
+    found[1].print();
+    found = hledejVsloupci(s,test,found);
+    cout  << "v sloupci" << endl;
+    found[0].print();
+    found[1].print();
+    found = hledejSikmo1(s,test,found);
+    cout  << "sikmo \\" << endl;
+    found[0].print();
+    found[1].print();
+    found = hledejSikmo2(s,test,found);
+    cout  << "sikmo /" << endl;
+    found[0].print();
+    found[1].print();
+   
+    for(int i = 0; i < 5; i++){
+        cout << "v " << i << " radku ";
+        if(jeVRadkuFigurka(i,test)) cout << "je ";
+        else cout << "neni ";
+        cout << "figurka" << endl;
+    }
+    cout << endl;
+    for(int i = 0; i < 5; i++){
+        cout << "v " << i << " sloupci ";
+        if(jeVeSloupciFigurka(i,test)) cout << "je ";
+        else cout << "neni ";
+        cout << "figurka" << endl;
+    }
+    Souradnice *s2 = new Souradnice(-1,-1);
+    for(int i = 0; i < 10; i ++){
+        s2 = randSouradnice(10,s2);        
+        test->setX(Souradnice(s2->x,s2->y),1);
+    }
+    test->print();
+    
     
     // init 
     

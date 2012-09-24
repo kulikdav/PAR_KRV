@@ -4,7 +4,8 @@
  *
  * Created on September 24, 2012, 11:58 AM
  */
-
+#include <iostream>
+using namespace std;
 
 #ifndef CONTAINER_H
 #define	CONTAINER_H
@@ -12,6 +13,17 @@
   struct Souradnice{
     int x;
     int y;
+    Souradnice(){
+        this->x = 0;
+        this->y = 0;
+    }
+    Souradnice(int x, int y){
+        this->x = x;
+        this->y = y;
+    }
+    void print(){
+        cout << "[" << this->x << "," << this->y << "]" << endl;
+    }
 };
 
 class Container {
@@ -26,6 +38,9 @@ public:
     
     void print();
     void setX(Souradnice s, int fig);
+    int getSize();
+    int ** getPole();
+    
     
 private:
     int n;

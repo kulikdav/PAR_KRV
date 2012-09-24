@@ -10,6 +10,8 @@
 
 using namespace std;
 
+
+
 Container::Container() {
 }
 
@@ -51,4 +53,11 @@ void Container::print(){
 
 void Container::setX(Souradnice s, int fig){
     pole[s.x][s.y] = fig;
+}
+int ** Container::getPole(){
+    return this->pole;
+}
+
+int Container::getSize(){
+    return this->n;
 }

@@ -15,6 +15,7 @@
       <itemPath>Container.cpp</itemPath>
       <itemPath>Container.h</itemPath>
       <itemPath>common.cpp</itemPath>
+      <itemPath>common.h</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
