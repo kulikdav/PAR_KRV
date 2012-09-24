@@ -6,6 +6,8 @@
  */
 
 #include <cstdlib>
+#include <iostream>
+#include "Container.h"
 
 using namespace std;
 
@@ -13,7 +15,39 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-
-    return 1;
+    stack <Container> zasobnik;
+    Container *test = new Container(5,0);
+    Container * best;
+    test->print();
+    
+    // init 
+    
+    {
+        // seber vrsek zasobniku
+        
+        // if container-k == 0 konec
+        // if reseni > 2*k konec 
+        // je mensi narocnost nez nejlepsi nalezena - uloz 
+        
+        
+        
+        
+        
+        // seber vezi
+           // koukni se kde muzes sebrat
+           // pro kazdou moznost seber + uloz na zasobnik
+        // seber kralovnou
+        
+        // hejbni vezi
+           // hejbej se jen kam to ma smysl  
+             // hledej jen sloupce kde jsou figurky
+             // kdyz ve stejnem radku je kralovna hledej radky 
+    }
+    
+    
+    
+    
+    
+    
 }
 
