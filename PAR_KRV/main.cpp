@@ -17,25 +17,23 @@ using namespace std;
  * 
  */
 
-
-
-
-
 int main(int argc, char** argv) {
     stack <Container> zasobnik;
-    int k = 2;
+    int k = 8;
  
     
     Container *test = new Container(10,10);
     Container * best;
-    Souradnice s(2,2);
-    test->setX(s,8);
-    test->setX(Souradnice(4,4),1);
-    Souradnice sv(3,3);
-    test->setX(sv,4);
+    
+    Souradnice kralovna(2,2);
+    test->setX(kralovna,8);
+    //test->setX(Souradnice(4,4),1);
+    Souradnice vez(3,3);
+    test->setX(vez,4);
     Souradnice *s2 = new Souradnice(-1,-1);
+    
     for(int i = 0; i < k; i ++){
-        s2 = randSouradnice(10,s2); 
+        s2 = randSouradnice(10,s2);
         int ** pole = test->getPole();
         if(pole[s2->x][s2->y] == 0)
           test->setX(Souradnice(s2->x,s2->y),1);
@@ -82,7 +80,7 @@ int main(int argc, char** argv) {
     cout  << "v radku" << endl;
     found[0].print();
     found[1].print();
-    found = hledejVsloupci(sk,test,found);
+    found = hledejVSloupci(sk,test,found);
     cout  << "v sloupci" << endl;
     found[0].print();
     found[1].print();
@@ -96,13 +94,13 @@ int main(int argc, char** argv) {
     found[1].print();
     
     cout << "vez: " ;
-    sv = najdiVez(test);
+    Souradnice sv = najdiVez(test);
     sv.print();
     found = hledejVRadku(sv,test,found);
     cout  << "v radku" << endl;
     found[0].print();
     found[1].print();
-    found = hledejVsloupci(sv,test,found);
+    found = hledejVSloupci(sv,test,found);
     cout  << "v sloupci" << endl;
     found[0].print();
     found[1].print();

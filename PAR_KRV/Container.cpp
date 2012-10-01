@@ -18,6 +18,8 @@ Container::Container() {
 Container::Container(int n, int k){
     if( n < 5) cout << "n je mimo povoleny rozsah";
     
+    //pole = new int[n][n];
+    
      pole = new int*[n];
      for(int i = 0; i < n; i++){
          pole[i] = new int[n];
@@ -60,4 +62,11 @@ int ** Container::getPole(){
 
 int Container::getSize(){
     return this->n;
+}
+
+void Container::setSize(int newK){
+    k = newK;
+}
+void Container::addPrice(int i){
+    result =+ i;
 }

@@ -4,11 +4,6 @@
 #include <cstdlib>
 using namespace std;
 
-
-
-
-
-
 int randInt(int max = 10){
     srand((unsigned)time(NULL)); 
     int r = rand(); 
@@ -32,7 +27,7 @@ Souradnice najdiVez(Container *c){
         }
     }
 }
-Souradnice  najdiKralovnu(Container *c){
+Souradnice najdiKralovnu(Container *c){
     int n = c->getSize();
     int ** pole = c->getPole();
     int fig = 8;
@@ -47,6 +42,7 @@ void presunFigurku(Souradnice s, Souradnice origin, int fig, Container * c){
     c->setX(s, fig);
     c->setX(origin, 0);
 }
+
 // vraci true pokud je v s-tem sloupci nejaka vymazatelna figurka
 bool jeVeSloupciFigurka(int s, Container * c){
     int ** pole = c->getPole();
@@ -198,7 +194,7 @@ Souradnice * hledejVRadku(Souradnice s, Container * c, Souradnice * f){
     
     return f;
 }
-Souradnice * hledejVsloupci(Souradnice s, Container * c, Souradnice * f){
+Souradnice * hledejVSloupci(Souradnice s, Container * c, Souradnice * f){
     int x = s.x;
     int y = s.y;
     int n = c->getSize();
@@ -229,4 +225,156 @@ Souradnice * hledejVsloupci(Souradnice s, Container * c, Souradnice * f){
       }
     }
     return f;
+}
+
+
+
+bool tahVezi(Container * c){
+    // Hleda figurky v dosahu veze, pokud najde, skoci a vrati true
+    // Pokud nenajde figurky v dosahu, zustava stat a vraci false
+    
+    Souradnice sVez = najdiVez(c);
+    Souradnice * found = new Souradnice[2];
+    
+    // Skok veze ve sloupci
+    found = hledejVRadku(sVez,c,found);
+    int n = c->getSize();
+    if (found[0].x != -1){
+        presunFigurku(found[0],sVez,4,c);
+        c->setSize(n-1);
+        c->addPrice(10);
+        return true;
+    }
+    
+    if (found[1].x != -1){
+        presunFigurku(found[1],sVez,4,c);
+        c->setSize(n-1);
+        c->addPrice(10);
+        return true;
+    }
+    
+    // Skok veze v radku
+    found = hledejVSloupci(sVez,c,found);
+    if (found[0].x != -1){
+        presunFigurku(found[0],sVez,4,c);
+        c->setSize(n-1);
+        c->addPrice(10);
+        return true;
+    }
+    
+    if (found[1].x != -1){
+        presunFigurku(found[1],sVez,4,c);
+        c->setSize(n-1);
+        c->addPrice(10);
+        return true;
+    }
+    
+    return false;
+}
+
+bool tahKralovnou(Container * c){
+    // Hleda figurkz v dosahu / pokud najde, skoci a vrati true
+    // pokud nenajde, nehejbe se a vrati false
+    // Mozna by bylo optimalnejsi dat prednost sikmejm skokum
+    
+    Souradnice sKralovna = najdiKralovnu(c);
+    Souradnice * found = new Souradnice[2];
+    
+    // Skok kralovny v radku
+    found = hledejVRadku(sKralovna,c,found);
+    int n = c->getSize();
+    if (found[0].x != -1){
+        presunFigurku(found[0],sKralovna,4,c);
+        c->setSize(n-1);
+        c->addPrice(15);
+        return true;
+    }
+    
+    if (found[1].x != -1){
+        presunFigurku(found[1],sKralovna,4,c);
+        c->setSize(n-1);
+        c->addPrice(15);
+        return true;
+    }
+    
+    // Skok kralovny v sloupci
+    found = hledejVSloupci(sKralovna,c,found);
+    if (found[0].x != -1){
+        presunFigurku(found[0],sKralovna,4,c);
+        c->setSize(n-1);
+        c->addPrice(15);
+        return true;
+    }
+    
+    if (found[1].x != -1){
+        presunFigurku(found[1],sKralovna,4,c);
+        c->setSize(n-1);
+        c->addPrice(15);
+        return true;
+    }
+    
+    // Skok kralovny sikmo 1
+    found = hledejSikmo1(sKralovna,c,found);
+    if (found[0].x != -1){
+        presunFigurku(found[0],sKralovna,8,c);
+        c->setSize(n-1);
+        c->addPrice(15);
+        return true;
+    }
+    
+    if (found[1].x != -1){
+        presunFigurku(found[1],sKralovna,8,c);
+        c->setSize(n-1);
+        c->addPrice(15);
+        return true;
+    }
+    
+    // Skok kralovny sikmo 2
+    found = hledejSikmo2(sKralovna,c,found);
+    if (found[0].x != -1){
+        presunFigurku(found[0],sKralovna,8,c);
+        c->setSize(n-1);
+        c->addPrice(15);
+        return true;
+    }
+    
+    if (found[1].x != -1){
+        presunFigurku(found[1],sKralovna,8,c);
+        c->setSize(n-1);
+        c->addPrice(15);
+        return true;
+    }
+    
+    return false;
+}
+
+bool presunVez(Container * c){
+    Souradnice sVez = najdiVez(c);
+    Souradnice * found = new Souradnice[2];
+    
+    for (int i = 0; i < c->getSize(); c++){
+        
+    }
+    
+    found = hledejVRadku(sVez,c,found);
+    
+    
+}
+
+bool tah(Container * c){
+    // skocit vezi
+    if (tahVezi(c)){
+        c->print();
+        return true;
+    }
+    
+    // skocit kralovnou
+    if (tahKralovnou(c)){
+        c->print();
+        return true;
+    }
+    
+    // presunout vez
+    
+    
 }

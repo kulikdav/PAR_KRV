@@ -1,0 +1,110 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h3><a name="uloha_krvkralovna_a_vez_na_sachovnici" id="uloha_krvkralovna_a_vez_na_sachovnici">Úloha KRV: královna a věž na šachovnici</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="vstupni_data1" id="vstupni_data1">Vstupní data:</a></h4>
+<div class="level4">
+
+<p>
+
+<em>n</em> = přirozené číslo představující velikost strany čtvercové šachovnice <em>S[1..n,1..n]</em>, <em>n&gt;= 5</em><br/>
+
+<em>k</em> = celé číslo představující počet náhodně rozmístěných figurek na šachovnici <em>S</em>, <em>n ⇐ k ⇐ n*(n+1)/2</em><br/>
+
+<em>B[1..k]</em> = náhodně vygenerované souřadnice <em>k</em> figurek<br/>
+
+<em>Q</em> = souřadnice královny<br/>
+
+<em>V</em> = souřadnice věže<br/>
+
+</p>
+
+</div>
+
+<h4><a name="pravidla_a_cil_hry1" id="pravidla_a_cil_hry1">Pravidla a cíl hry:</a></h4>
+<div class="level4">
+
+<p>
+
+Počáteční stav je dán množinou <em>B[1..k]</em> náhodně vygenerovaných <em>k</em> figurek neobsahující
+královnu a věž a pozicí jedné královny a jedně věže.
+Jeden <strong>tah</strong> je posun královny podle šachových pravidel či posun věže podle šachových pravidel. Cena tahu královny je 1,5 a cena tahu veže je 1.
+</p>
+
+<p>
+<strong>Cílem hry</strong> je odstanit všechny figurky tak, aby na šachovnici zůstala samotná královna a věž. Součet cen všech tahů musí být minimální.
+Královna nikdy nesebere věž (ani věž královnu), i kdyby tato možnost vznikla. 
+</p>
+
+</div>
+
+<h4><a name="ukol1" id="ukol1">Úkol:</a></h4>
+<div class="level4">
+
+<p>
+
+Nalézt minimální posloupnost tahů tak, aby na šachovnici zůstala samotná královna a věž. Součet ceny všech tahů musí být minimální. Řešení vždy existuje. 
+</p>
+
+</div>
+
+<h4><a name="vystup_algoritmu1" id="vystup_algoritmu1">Výstup algoritmu:</a></h4>
+<div class="level4">
+
+<p>
+
+Číslo udávající počet potřebných tahů a posloupnost diagramů, které budou zobrazovat stavy na šachovnici po každém tahu.
+</p>
+
+</div>
+
+<h4><a name="sekvencni_algoritmus1" id="sekvencni_algoritmus1">Sekvenční algoritmus:</a></h4>
+<div class="level4">
+
+<p>
+Sekvenční algoritmus typu <a href="/courses/MI-PAR/labs/prohledavani_do_hloubky" class="wikilink1" title="labs:prohledavani_do_hloubky">BB-DFS</a> s hloubkou prohledávaného prostoru omezenou horní mezí.<br/>
+
+</p>
+
+<p>
+Cena, kterou minimalizujeme, je součet cen tahů, kterými se lze do koncového stavu z počátečního stavu dostat.
+Algoritmus končí, když cena řešení koncového stavu je rovna těsné dolní mezi, jinak algoritmus prohledává celý stavový prostor do hloubky dané horní mezí. 
+</p>
+
+<p>
+<strong>Těsna dolní mez</strong>: V jednom tahu může královna či věž sebrat maximálně jednu figurku, a proto pokud by v každém tahu byla sebrána jedna figurka, nemůže být cena nižší než <em>(1 + 1.5)* k/2</em>.
+</p>
+
+<p>
+<strong>Těsná horní mez</strong>: V nejhorším případě pro <em>n&gt;=k</em> bude cena <em>2*k</em> (je třeba <em>2*k</em> tahů), neboť
+vždy existuje řešení, ve kterém věž bere v každém druhém tahu a královna nebere nic.
+Jestliže bude <em>k&gt;n</em>, pak v nejhorším případě bude cena <em>2*k+1,5*(k-n)</em> (je třeba <em>2*k+(k-n)</em> tahů), neboť <em>k</em> figurek je sebráno na 2 tahy (věže) a <em>k-n</em> figurek je sebráno na 1 tah (dámy).
+</p>
+
+</div>
+
+<h4><a name="paralelni_algoritmus1" id="paralelni_algoritmus1">Paralelní algoritmus:</a></h4>
+<div class="level4">
+
+<p>
+
+Paralelní algoritmus je typu <a href="/courses/MI-PAR/labs/prohledavani_do_hloubky" class="wikilink1" title="labs:prohledavani_do_hloubky">G-PBB-DFS-D</a>.
+
+</p>
+<hr />
+
+</div>
+    </body>
+</html>

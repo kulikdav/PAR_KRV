@@ -19,7 +19,7 @@ bool jeVRadkuFigurka(int r, Container * c);
 Souradnice * hledejSikmo1(Souradnice s, Container * c, Souradnice * f);
 Souradnice * hledejSikmo2(Souradnice s, Container * c, Souradnice * f);
 Souradnice * hledejVRadku(Souradnice s, Container * c, Souradnice * f);
-Souradnice * hledejVsloupci(Souradnice s, Container * c, Souradnice * f);
+Souradnice * hledejVSloupci(Souradnice s, Container * c, Souradnice * f);
 
 #endif	/* COMMON_H */
 

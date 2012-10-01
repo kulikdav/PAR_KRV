@@ -39,7 +39,10 @@ public:
     void print();
     void setX(Souradnice s, int fig);
     int getSize();
+    void setSize(int newK);
     int ** getPole();
+    
+    void addPrice(int i);
     
     
 private:
