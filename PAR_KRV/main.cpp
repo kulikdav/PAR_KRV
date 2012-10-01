@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     Souradnice kralovna(2,2);
     test->setX(kralovna,8);
     //test->setX(Souradnice(4,4),1);
-    Souradnice vez(3,3);
+    Souradnice vez(5,5);
     test->setX(vez,4);
     Souradnice *s2 = new Souradnice(-1,-1);
     
@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
     cout  << "sikmo /" << endl;
     found[0].print();
     found[1].print();
-   */
+   
     for(int i = 0; i < 5; i++){
         cout << "v " << i << " radku ";
         if(jeVRadkuFigurka(i,test)) cout << "je ";
@@ -105,7 +105,15 @@ int main(int argc, char** argv) {
     found[0].print();
     found[1].print();
 
+    */
     
+    
+    // Test Cycle
+    while (test->getCount() != 2){
+        tah(test);
+    }
+    
+    cout << "ALL FIGURES CLEARED!!" << endl;
     
     
 

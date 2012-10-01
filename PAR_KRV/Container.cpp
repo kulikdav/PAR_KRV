@@ -15,8 +15,10 @@ using namespace std;
 Container::Container() {
 }
 
-Container::Container(int n, int k){
+Container::Container(int n, int figCount){
     if( n < 5) cout << "n je mimo povoleny rozsah";
+    
+    result = 0;
     
     //pole = new int[n][n];
     
@@ -32,9 +34,9 @@ Container::Container(int n, int k){
      }
      
      this->n = n;
-     if(n > k || ((n*(n+1)/2)) < k ){
-         cout << "k je mimo povoleny rozsah";     
-     }else  this->k = k;
+     if(n > figCount || ((n*(n+1)/2)) < figCount ){
+         cout << "figCount je mimo povoleny rozsah";     
+     }else  k = figCount;
     
 }
 
@@ -45,12 +47,13 @@ Container::~Container() {
 }
 
 void Container::print(){
-   for(int i = 0; i < this->n; i++){
-         for(int j = 0; j < this->n; j++){
+   for(int i = 0; i < n; i++){
+         for(int j = 0; j < n; j++){
              cout << pole[i][j] << " ";
          }
          cout << endl;
      }
+   cout << "Figurek: " << k << " Cena: " << result << endl;
 }
 
 void Container::setX(Souradnice s, int fig){
@@ -64,9 +67,14 @@ int Container::getSize(){
     return this->n;
 }
 
-void Container::setSize(int newK){
+void Container::setCount(int newK){
     k = newK;
 }
+
+int Container::getCount(){
+    return k;
+}
+
 void Container::addPrice(int i){
-    result =+ i;
+    result = result + i;
 }

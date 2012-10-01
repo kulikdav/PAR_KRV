@@ -21,5 +21,7 @@ Souradnice * hledejSikmo2(Souradnice s, Container * c, Souradnice * f);
 Souradnice * hledejVRadku(Souradnice s, Container * c, Souradnice * f);
 Souradnice * hledejVSloupci(Souradnice s, Container * c, Souradnice * f);
 
+bool tah(Container * c);
+
 #endif	/* COMMON_H */
 

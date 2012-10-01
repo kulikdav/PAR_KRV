@@ -11,7 +11,9 @@ using namespace std;
 #define	CONTAINER_H
 
   struct Souradnice{
+    //Řádek
     int x;
+    // Sloupec
     int y;
     Souradnice(){
         this->x = 0;
@@ -39,9 +41,10 @@ public:
     void print();
     void setX(Souradnice s, int fig);
     int getSize();
-    void setSize(int newK);
+    void setCount(int newK);
     int ** getPole();
     
+    int getCount();
     void addPrice(int i);
     
     

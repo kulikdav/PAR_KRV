@@ -43,25 +43,45 @@ void presunFigurku(Souradnice s, Souradnice origin, int fig, Container * c){
     c->setX(origin, 0);
 }
 
-// vraci true pokud je v s-tem sloupci nejaka vymazatelna figurka
-bool jeVeSloupciFigurka(int s, Container * c){
+// vraci true pokud je v s-tem sloupci nejaka dana figurka
+bool jeVeSloupciFigurka(int s, int fig, Container * c){
     int ** pole = c->getPole();
     int n = c->getSize();
     for(int i = 0; i < n; i++){
-        if(pole[i][s] == 1) return true;
+        if(pole[i][s] == fig) return true;
     }
     return false;
 }
 
-bool jeVRadkuFigurka(int r, Container * c){
+bool jeVRadkuFigurka(int r, int fig, Container * c){
     int ** pole = c->getPole();
     int n = c->getSize();
     for(int i = 0; i < n; i++){
-        if(pole[r][i] == 1) return true;
+        if(pole[r][i] == fig) return true;
     }
     return false;
 }
 
+// Pro pripadnou optimalizaci pri hledani radku a sloupcu s nejvetsim ptencialem vyberu figurek
+int pocetFigurekVRadku(int r, Container * c){
+    int count = 0;
+    int ** pole = c->getPole();
+    int n = c->getSize();
+    for(int i = 0; i < n; i++){
+        if(pole[r][i] == 1) count++;
+    }
+    return count;
+}
+
+int pocetFigurekVSloupci(int s, Container * c){
+    int count = 0;
+    int ** pole = c->getPole();
+    int n = c->getSize();
+    for(int i = 0; i < n; i++){
+        if(pole[i][s] == 1) count++;
+    }
+    return count;
+}
 
 //   hledej \ diagonalu
 Souradnice * hledejSikmo1(Souradnice s, Container * c, Souradnice * f){
@@ -228,7 +248,6 @@ Souradnice * hledejVSloupci(Souradnice s, Container * c, Souradnice * f){
 }
 
 
-
 bool tahVezi(Container * c){
     // Hleda figurky v dosahu veze, pokud najde, skoci a vrati true
     // Pokud nenajde figurky v dosahu, zustava stat a vraci false
@@ -238,17 +257,17 @@ bool tahVezi(Container * c){
     
     // Skok veze ve sloupci
     found = hledejVRadku(sVez,c,found);
-    int n = c->getSize();
+    int n = c->getCount();
     if (found[0].x != -1){
         presunFigurku(found[0],sVez,4,c);
-        c->setSize(n-1);
+        c->setCount(n-1);
         c->addPrice(10);
         return true;
     }
     
     if (found[1].x != -1){
         presunFigurku(found[1],sVez,4,c);
-        c->setSize(n-1);
+        c->setCount(n-1);
         c->addPrice(10);
         return true;
     }
@@ -257,14 +276,14 @@ bool tahVezi(Container * c){
     found = hledejVSloupci(sVez,c,found);
     if (found[0].x != -1){
         presunFigurku(found[0],sVez,4,c);
-        c->setSize(n-1);
+        c->setCount(n-1);
         c->addPrice(10);
         return true;
     }
     
     if (found[1].x != -1){
         presunFigurku(found[1],sVez,4,c);
-        c->setSize(n-1);
+        c->setCount(n-1);
         c->addPrice(10);
         return true;
     }
@@ -282,17 +301,17 @@ bool tahKralovnou(Container * c){
     
     // Skok kralovny v radku
     found = hledejVRadku(sKralovna,c,found);
-    int n = c->getSize();
+    int n = c->getCount();
     if (found[0].x != -1){
-        presunFigurku(found[0],sKralovna,4,c);
-        c->setSize(n-1);
+        presunFigurku(found[0],sKralovna,8,c);
+        c->setCount(n-1);
         c->addPrice(15);
         return true;
     }
     
     if (found[1].x != -1){
-        presunFigurku(found[1],sKralovna,4,c);
-        c->setSize(n-1);
+        presunFigurku(found[1],sKralovna,8,c);
+        c->setCount(n-1);
         c->addPrice(15);
         return true;
     }
@@ -300,15 +319,15 @@ bool tahKralovnou(Container * c){
     // Skok kralovny v sloupci
     found = hledejVSloupci(sKralovna,c,found);
     if (found[0].x != -1){
-        presunFigurku(found[0],sKralovna,4,c);
-        c->setSize(n-1);
+        presunFigurku(found[0],sKralovna,8,c);
+        c->setCount(n-1);
         c->addPrice(15);
         return true;
     }
     
     if (found[1].x != -1){
-        presunFigurku(found[1],sKralovna,4,c);
-        c->setSize(n-1);
+        presunFigurku(found[1],sKralovna,8,c);
+        c->setCount(n-1);
         c->addPrice(15);
         return true;
     }
@@ -317,14 +336,14 @@ bool tahKralovnou(Container * c){
     found = hledejSikmo1(sKralovna,c,found);
     if (found[0].x != -1){
         presunFigurku(found[0],sKralovna,8,c);
-        c->setSize(n-1);
+        c->setCount(n-1);
         c->addPrice(15);
         return true;
     }
     
     if (found[1].x != -1){
         presunFigurku(found[1],sKralovna,8,c);
-        c->setSize(n-1);
+        c->setCount(n-1);
         c->addPrice(15);
         return true;
     }
@@ -333,14 +352,14 @@ bool tahKralovnou(Container * c){
     found = hledejSikmo2(sKralovna,c,found);
     if (found[0].x != -1){
         presunFigurku(found[0],sKralovna,8,c);
-        c->setSize(n-1);
+        c->setCount(n-1);
         c->addPrice(15);
         return true;
     }
     
     if (found[1].x != -1){
         presunFigurku(found[1],sKralovna,8,c);
-        c->setSize(n-1);
+        c->setCount(n-1);
         c->addPrice(15);
         return true;
     }
@@ -352,13 +371,17 @@ bool presunVez(Container * c){
     Souradnice sVez = najdiVez(c);
     Souradnice * found = new Souradnice[2];
     
-    for (int i = 0; i < c->getSize(); c++){
-        
+    //Souradnice sKralovna = najdiKralovnu(c);
+    // Vlastne nebude potreba hledat radky bez kralovny protoze kdyby na nem byly figurky tak je kralovna uz veme
+    int line = 0;
+    while(!jeVRadkuFigurka(line,1,c) || (line == c->getSize())){
+        line++;
     }
+    // V line je radek s figurkou
     
-    found = hledejVRadku(sVez,c,found);
+    Souradnice target(line,sVez.y);
     
-    
+    presunFigurku(target,sVez,4,c);
 }
 
 bool tah(Container * c){
@@ -375,6 +398,6 @@ bool tah(Container * c){
     }
     
     // presunout vez
-    
+    presunVez(c);
     
 }
