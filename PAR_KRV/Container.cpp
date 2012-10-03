@@ -19,9 +19,10 @@ Container::Container(int n, int k){
     this->upperLimit = 20*k;
     this->n = n;
     this->k = k;
+    this->counter = 0;
     this->result = 0;
     if( n < 5) cout << "n je mimo povoleny rozsah";
-    
+    history = new Souradnice[n*n];
      pole = new int*[n];
      for(int i = 0; i < n; i++){
          pole[i] = new int[n];
@@ -104,4 +105,14 @@ void Container::setResult(int res){
 }
 int Container::getValue(int x, int y){
     return this->pole[x][y];
+}
+void Container::addHistory(Souradnice s){
+    Souradnice c;
+    c.x = s.x;
+    c.y = s.y;
+    c.fig = s.fig;
+    this->history[this->counter++] = c;
+}
+Souradnice * Container::getHistory(){
+    return this->history;
 }
