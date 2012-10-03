@@ -5,12 +5,14 @@
  * Created on September 24, 2012, 11:58 AM
  */
 #include <iostream>
+#include <string>
 using namespace std;
 
 #ifndef CONTAINER_H
 #define	CONTAINER_H
 
   struct Souradnice{
+    int fig;
     int x;
     int y;
     Souradnice(){
@@ -22,12 +24,14 @@ using namespace std;
         this->y = y;
     }
     void print(){
+        if(this->fig > 0) cout << fig;
         cout << "[" << this->x << "," << this->y << "]" << endl;
     }
     bool isValid(){
         if(this->x != -1 && this->y != -1) return true;
         return false;
     }
+    
 };
 
 struct Container {
@@ -52,6 +56,10 @@ public:
     void addResult(int add);
     bool overLimit();
     int getValue(int x, int y);
+    Souradnice * getHistory();
+    void addHistory(Souradnice s);
+    int getCounter(){return this->counter;}
+    
     
     
     
@@ -62,6 +70,8 @@ private:
     
     int result;
     int upperLimit;
+    Souradnice * history;
+    int counter;
     /* 
      * prazdne pole = 0
      * figurky 1
