@@ -149,6 +149,11 @@ int main(int argc, char** argv) {
             else c->addResult(15);
             if( c->getValue(branch[i].x,branch[i].y) != 4 && c->getValue(branch[i].x,branch[i].y) != 8){
               //cout << "skacu: [" << branch[i].x << "," << branch[i].y << "], value=" << c->getValue(branch[i].x,branch[i].y) << endl;
+                //fig + "[" + branch[i].x + "," branch[i].y + "];"
+                Souradnice s;
+                s.x = branch[i].x; s.y = branch[i].y; s.fig=fig;
+                c->addHistory(s);
+                
               presunFigurku(branch[i],posun,fig,c);
             } else { 
                 cout << "error " << c->getValue(branch[i].x,branch[i].y) << endl;
@@ -174,4 +179,9 @@ int main(int argc, char** argv) {
     }
     cout << "BEST:" << endl;
         best->print();
+        Souradnice * result = best->getHistory();
+        for(int i = 0 ; i < best->getCounter(); i++){
+            result[i].print();
+        }
+        
 }
