@@ -24,9 +24,13 @@ using namespace std;
     void print(){
         cout << "[" << this->x << "," << this->y << "]" << endl;
     }
+    bool isValid(){
+        if(this->x != -1 && this->y != -1) return true;
+        return false;
+    }
 };
 
-class Container {
+struct Container {
 public:
     
   
@@ -38,8 +42,13 @@ public:
     
     void print();
     void setX(Souradnice s, int fig);
+    int getK();
     int getSize();
     int ** getPole();
+    int getResult();
+    int getUpperLimit();
+    void setPole(int ** pole);
+    
     
     
 private:
@@ -48,9 +57,7 @@ private:
     int ** pole;
     
     int result;
-    
-    Container * predek;
-    
+    int upperLimit;
     /* 
      * prazdne pole = 0
      * figurky 1

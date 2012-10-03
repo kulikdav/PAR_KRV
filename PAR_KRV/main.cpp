@@ -31,8 +31,7 @@ int main(int argc, char** argv) {
     test->setX(Souradnice(4,4),1);
     test->setX(Souradnice(0,0),1);
     test->setX(Souradnice(0,2),1);
-    test->setX(Souradnice(4,3),1);
-    Souradnice sv(3,3);
+    Souradnice sv(4,3);
     test->setX(sv,4);
     Souradnice *s2 = new Souradnice(-1,-1);
     for(int i = 0; i < k; i ++){
@@ -42,7 +41,6 @@ int main(int argc, char** argv) {
           test->setX(Souradnice(s2->x,s2->y),1);
         else i--;
     }  
-    cout << test->getSize() << endl;
     
     // init 
     zasobnik.push(test);
@@ -52,7 +50,7 @@ int main(int argc, char** argv) {
         Container * top = zasobnik.top();
         zasobnik.pop();
         // if container-k == 0 konec
-        top->print();
+        //top->print();
         if(top->getK() == 0) break;
         // if reseni > 2*k konec 
         if(top->getK() >= top->getUpperLimit()) break;
@@ -103,17 +101,43 @@ int main(int argc, char** argv) {
         if(diag1[1].isValid()) branch[counter++] = diag1[1];
         if(diag2[0].isValid()) branch[counter++] = diag2[0];
         if(diag2[1].isValid()) branch[counter++] = diag2[1];    
-            cout << "vez:" << endl; 
-            for(int i = 0; i < counter; i++){
-                if(i == delimiter) cout << "kralovna:" << endl;
-                branch[i].print();
+        int delimiter2 = counter;    
+            
+         //hejbni vezi
+            for(int n = 0; n < top->getSize(); n++){
+                if(jeVeSloupciFigurka(n,top) > 0 && n != vez.y )
+                    if(n != kralovna.x)branch[counter++] = Souradnice(vez.x,n);
+                    else {
+                        for(int i = 0; i < top->getSize(); i++){
+                            if(top->getPole()[i][n] == 1){
+                                branch[counter++] = Souradnice(i,vez.y);
+                            }
+                        }
+                    }
             }
             
-        // hejbni vezi
              // hejbej se jen kam to ma smysl  
              // hledej maximum z jevsloupci/jevradku, pokud se tam muzes hnout
              // hledej jen sloupce kde jsou figurky
              // kdyz ve stejnem radku je kralovna hledej radky 
+        top->print();
+        int fig = 4;
+        Souradnice posun = vez;
+        cout << "-----------------------"<<endl;
+        for(int i = 0; i<counter; i++){
+            
+            if(i == delimiter) {fig = 8;posun = kralovna;}
+            if(i == delimiter2){fig = 4;posun = vez;}
+            cout << fig << " ";
+            branch[i].print();
+            presunFigurku(branch[i],posun,fig,top);
+            top->print();
+            zasobnik.push(top);
+            top->setX(vez,4);
+            top->setX(kralovna,8);
+            top->setX(branch[i],1);
+            
+        }    
     }
     
     

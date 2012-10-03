@@ -47,23 +47,26 @@ void presunFigurku(Souradnice s, Souradnice origin, int fig, Container * c){
     c->setX(s, fig);
     c->setX(origin, 0);
 }
-// vraci true pokud je v s-tem sloupci nejaka vymazatelna figurka
-bool jeVeSloupciFigurka(int s, Container * c){
+// vraci pocet figurek ve sloupci
+int jeVeSloupciFigurka(int s, Container * c){
     int ** pole = c->getPole();
     int n = c->getSize();
+    int counter = 0;
     for(int i = 0; i < n; i++){
-        if(pole[i][s] == 1) return true;
+        if(pole[i][s] == 1) counter++;
     }
-    return false;
+    return counter;
 }
-
-bool jeVRadkuFigurka(int r, Container * c){
+// -||- v radku
+int jeVRadkuFigurka(int r, Container * c){
     int ** pole = c->getPole();
     int n = c->getSize();
+    int counter = 0;
     for(int i = 0; i < n; i++){
-        if(pole[r][i] == 1) return true;
+        if(pole[r][i] == 1) counter++;
     }
-    return false;
+    
+    return counter;
 }
 
 

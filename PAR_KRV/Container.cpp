@@ -16,6 +16,9 @@ Container::Container() {
 }
 
 Container::Container(int n, int k){
+    this->upperLimit = 2*k;
+    this->n = n;
+    this->k = k;
     if( n < 5) cout << "n je mimo povoleny rozsah";
     
      pole = new int*[n];
@@ -29,14 +32,15 @@ Container::Container(int n, int k){
          }
      }
      
-     this->n = n;
+     
      if(n > k || ((n*(n+1)/2)) < k ){
          cout << "k je mimo povoleny rozsah";     
-     }else  this->k = k;
+     }
     
 }
 
 Container::Container(const Container& orig) {
+    
 }
 
 Container::~Container() {
@@ -60,4 +64,13 @@ int ** Container::getPole(){
 
 int Container::getSize(){
     return this->n;
+}
+int Container::getK(){
+    return this->k;
+}
+int Container::getResult(){
+    return this->result;
+}
+int Container::getUpperLimit(){
+    return this->upperLimit;
 }
