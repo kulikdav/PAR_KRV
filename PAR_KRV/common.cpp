@@ -8,7 +8,17 @@ using namespace std;
 
 
 
-
+int zbyvaFigurek(Container *c){
+    int ** p = c->getPole();
+    int counter = 0;
+    for(int i=0; i < c->getSize(); i++){
+        for(int j=0; j < c->getSize(); j++){
+           if(p[i][j] == 1) counter++;   
+        }
+    }
+    return counter;
+    
+}
 int randInt(int max = 10){
     srand((unsigned)time(NULL)); 
     int r = rand(); 
@@ -31,6 +41,8 @@ Souradnice najdiVez(Container *c){
             if(pole[i][j] == fig) return Souradnice(i,j);
         }
     }
+    c->print();
+    return Souradnice(-1,-1);
 }
 Souradnice  najdiKralovnu(Container *c){
     int n = c->getSize();
@@ -173,7 +185,7 @@ Souradnice * hledejVRadku(Souradnice s, Container * c, Souradnice * f){
     // vlevo
     if(y > 0){
     for(int i = y-1; i >= 0; i--){
-        if(pole[x][i] == 8){
+        if(pole[x][i] == 8 || pole[x][i] == 4){
             break;
         }
         if(pole[x][i] == 1){
@@ -187,7 +199,7 @@ Souradnice * hledejVRadku(Souradnice s, Container * c, Souradnice * f){
     // vpravo
     if(y < (n-1)){
       for(int i = y+1; i < n; i++){
-          if(pole[x][i] == 8){
+          if(pole[x][i] == 8 || pole[x][i] == 4){
               break;
           }
           if(pole[x][i] == 1){
@@ -212,6 +224,7 @@ Souradnice * hledejVsloupci(Souradnice s, Container * c, Souradnice * f){
     // nahore
     if(x > 0){
       for(int i = x-1; i >= 0; i--){
+          if( pole[x][i] == 4 )break;
         if(pole[i][y] == 1){
             Souradnice d(i,y);
             f[0] = d;
@@ -223,6 +236,7 @@ Souradnice * hledejVsloupci(Souradnice s, Container * c, Souradnice * f){
     // dole
     if(x < (n-1)){
       for(int i = x+1; i < n; i++){
+        if( pole[x][i] == 4 )break;
         if(pole[i][y] == 1){
             Souradnice d(i,y);
             f[1] = d;

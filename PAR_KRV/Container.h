@@ -47,7 +47,11 @@ public:
     int ** getPole();
     int getResult();
     int getUpperLimit();
-    void setPole(int ** pole);
+    void setPole(int ** p);
+    void setResult(int res);
+    void addResult(int add);
+    bool overLimit();
+    int getValue(int x, int y);
     
     
     

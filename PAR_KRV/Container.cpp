@@ -16,9 +16,10 @@ Container::Container() {
 }
 
 Container::Container(int n, int k){
-    this->upperLimit = 2*k;
+    this->upperLimit = 20*k;
     this->n = n;
     this->k = k;
+    this->result = 0;
     if( n < 5) cout << "n je mimo povoleny rozsah";
     
      pole = new int*[n];
@@ -53,6 +54,9 @@ void Container::print(){
          }
          cout << endl;
      }
+   cout << "result: " << this->result     << endl;
+   cout << "limit:  " << this->upperLimit << endl;
+   
 }
 
 void Container::setX(Souradnice s, int fig){
@@ -73,4 +77,31 @@ int Container::getResult(){
 }
 int Container::getUpperLimit(){
     return this->upperLimit;
+}
+void Container::addResult(int add){
+    this->result += add;
+}
+void Container::setPole(int** p){
+    pole = new int*[n];
+     for(int i = 0; i < n; i++){
+         pole[i] = new int[n];
+     }
+     
+     for(int i = 0; i < n; i++){
+         for(int j = 0; j < n; j++){
+             pole[i][j] = p[i][j];
+         }
+     }
+}
+bool Container::overLimit(){
+    if(this->result > this->upperLimit){
+        return true;
+    }
+    return false;
+}
+void Container::setResult(int res){
+    this->result = res;
+}
+int Container::getValue(int x, int y){
+    return this->pole[x][y];
 }

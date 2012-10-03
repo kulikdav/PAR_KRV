@@ -20,6 +20,7 @@ Souradnice * hledejSikmo1(Souradnice s, Container * c, Souradnice * f);
 Souradnice * hledejSikmo2(Souradnice s, Container * c, Souradnice * f);
 Souradnice * hledejVRadku(Souradnice s, Container * c, Souradnice * f);
 Souradnice * hledejVsloupci(Souradnice s, Container * c, Souradnice * f);
+int zbyvaFigurek(Container * c);
 
 #endif	/* COMMON_H */
 
