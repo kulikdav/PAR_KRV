@@ -22,166 +22,152 @@ using namespace std;
 
 int main(int argc, char** argv) {
     stack <Container*> zasobnik;
-    Container * test = new Container(10,10);
-    Container * best;
+    int size = 10;
+    int k = 19;
+    Container * test = new Container(size,k);
+    Container * best = new Container(size,k);
+    best->setResult(k * 20);
     
      
    
-    test->setX(Souradnice(3,3),4);
-    test->setX(Souradnice(3,1),8);
-    test->setX(Souradnice(1,1),1);
-    test->setX(Souradnice(3,6),1);
-    test->setX(Souradnice(3,5),1);
-    test->setX(Souradnice(4,2),1);
-    test->setX(Souradnice(5,2),1);
-    test->setX(Souradnice(6,2),1);
+    test->setX(Souradnice(1,1),4);
+    test->setX(Souradnice(6,6),8);
+    
+    test->setX(Souradnice(4,1),1);
+    test->setX(Souradnice(1,0),1);
+    test->setX(Souradnice(1,3),1);
+    test->setX(Souradnice(0,1),1);
+    
+    test->setX(Souradnice(5,5),1);
+    test->setX(Souradnice(5,7),1);
+    test->setX(Souradnice(7,5),1);
+    test->setX(Souradnice(7,7),1);
+    
+    test->setX(Souradnice(6,5),1);
+    test->setX(Souradnice(6,7),1);
     test->setX(Souradnice(7,6),1);
-    
-    
-    
-    
-    
-    
-    
-    
+    test->setX(Souradnice(7,6),1);
+    test->setX(Souradnice(9,9),1);
+
       
-    
+     
     // init 
     zasobnik.push(test);
     test->print();
+    int max = 0;
+    
     while(!zasobnik.empty())
     {
         
-        // seber vrsek zasobniku
-        Container * top = zasobnik.top();
-        zasobnik.pop();
-        //cout << zbyvaFigurek(top);
-        // if container-k == 0 konec
-        //top->print();
+                
+        Container *top = zasobnik.top();
+        zasobnik.pop();       
         
-        // if reseni > 2*k konec 
-        
-        // je mensi narocnost nez nejlepsi nalezena - uloz 
-        
-        
-        
-        
-        
-        
-        Souradnice *branch = new Souradnice[12];
-        int counter = 0;
-        
-        
-        // seber vezi
-        Souradnice vez = najdiVez(top);
-        
-        //vez.print();
-        Souradnice *radek = new Souradnice[2];
-        Souradnice *sloupec = new Souradnice[2];
-        Souradnice *diag1 = new Souradnice[2];
-        Souradnice *diag2 = new Souradnice[2];
-        
-        radek = hledejVRadku(vez,top,radek);
-        sloupec = hledejVsloupci(vez,top,sloupec);
-        if(radek[0].isValid()) branch[counter++] = radek[0];
-        if(radek[1].isValid()) branch[counter++] = radek[1];
-        if(sloupec[0].isValid()) branch[counter++] = sloupec[0];
-        if(sloupec[1].isValid()) branch[counter++] = sloupec[1];
-        int delimiter = counter;
-        
-        
-        
-        
-           // k = k - 1
-           // koukni se kde muzes sebrat
-           // pro kazdou moznost seber + uloz na zasobnik
-        // seber kralovnou
-        
-        Souradnice kralovna = najdiKralovnu(top);
-            radek = hledejVRadku(kralovna,top,radek);
-            sloupec = hledejVsloupci(kralovna,top,sloupec);
-            diag1 = hledejSikmo1(kralovna,top,diag1);
-            diag2 = hledejSikmo2(kralovna,top,diag2);
-        if(radek[0].isValid()) branch[counter++] = radek[0];
-        if(radek[1].isValid()) branch[counter++] = radek[1];
-        if(sloupec[0].isValid()) branch[counter++] = sloupec[0];
-        if(sloupec[1].isValid()) branch[counter++] = sloupec[1];
-        if(diag1[0].isValid()) branch[counter++] = diag1[0];
-        if(diag1[1].isValid()) branch[counter++] = diag1[1];
-        if(diag2[0].isValid()) branch[counter++] = diag2[0];
-        if(diag2[1].isValid()) branch[counter++] = diag2[1];    
-        int delimiter2 = counter;    
+        if(zasobnik.size() > max) max = zasobnik.size();
+        if(zbyvaFigurek(top) == 0){
+            if(top->getResult() < best->getResult()){
+                best = top;
+                cout << "newbest" << best->getResult() << endl;
             
-         //hejbni vezi
-        if(delimiter == 0){
-            //top->print();
-            for(int i = 0; i < top->getSize(); i++){
-                if(jeVeSloupciFigurka(i,top) > 0 && i != vez.y){
-                    //if(top->getValue(vez.x,i) != 8){
-                      branch[counter++] = Souradnice(vez.x,i);
-                    
-                    // dodelat hledani radku ve kterem jsou 1 ( sloupec = kralovna.y);
+            }
+            //cout << top->getResult() << " " << best->getResult() << endl;
+        } 
+        else {
+        
+        
+        Souradnice *branch = new Souradnice[4+8+size+1];
+        int *fig = new int[13+size];
+        Souradnice vez = najdiVez(top);           
+        if(vez.x == -1 || vez.y == -1 ){
+            continue;
+        }
+        Souradnice kralovna = najdiKralovnu(top); 
+        
+        hledejVRadku(vez,top,branch);
+        hledejVsloupci(vez,top,branch+2);
+        for(int i = 0; i < 4; i++){
+            if(branch[i].fig == -1)branch[i].fig = 4;
+        }
+        // pokud existuje pro pohyb veze, branchuj, jinak hledej pro vez;
+        
+        if(!branch[0].isValid() && !branch[1].isValid()){
+            
+          hledejVRadku(kralovna,top,branch+4);
+          hledejVsloupci(kralovna,top,branch+6);
+          hledejSikmo1(kralovna,top,branch+8);
+          hledejSikmo2(kralovna,top,branch+10);
+          int maxr = 0, maxs = 0; int cr = -1;int cs = -1;int c = 0;
+          for(int i = 0; i < size; i++){
+             int r = jeVRadkuFigurka(i,top);
+             int s = jeVeSloupciFigurka(i,top);
+             if(r > maxr){maxr = r; cr = i;}
+             if(s > maxs){maxs = s; cs = i;}
+          }
+          
+          //top->print();
+          if (maxr >= maxs){
+              for(int i = 0; i < size; i++){
+                  if(maxr == jeVRadkuFigurka(i,top)){
+                      branch[12+size-(c++)] = Souradnice(i,vez.y,4);
+                  }
+              }
+          } 
+          if ( maxr < maxs){
+              for(int i = 0; i < size; i++){
+                  if(maxs == jeVeSloupciFigurka(i,top)){
+                     // cout << i << "," << vez.y << endl;
+                      branch[12+size-(c++)] = Souradnice(vez.x,i,4);
+                  }
+              }
+          } 
+          //cout << endl;
+            
+          for(int i = 0; i < 12; i++){
+            if(branch[i].fig == -1)branch[i].fig = 8;
+          }
+        }/*
+        cout << "\n-------------------------------------\n";
+        cout << "-------------------------------------\n";
+        vez.print();
+        top->print();
+        cout << max << endl;*/
+        for(int i = 12+size; i>= 0; i--){
+            if(branch[i].isValid()){
+                /*cout << i << "--";
+                branch[i].print();*/
+                Container *newc = new Container(size,k);
+                newc->setResult(top->getResult());
+                Souradnice s = vez;
+                if(branch[i].fig == 8) s = kralovna;
+                newc->setPole(top->getPole());
+                presunFigurku(branch[i],s,branch[i].fig,newc);
+                //cout << zasobnik.size() << endl;
+                newc->addResult(10);
+                if(branch[i].fig == 8) newc->addResult(5);
+                //newc->print();
+                if(zbyvaFigurek(newc) > 0){
+                    int minPrice = newc->getResult() + (10 * zbyvaFigurek(newc));
+                    if(minPrice < best->getResult()){
+                       zasobnik.push(newc); 
+                    }
                 }
-                //cout << "sloupec" << i << ": " << jeVeSloupciFigurka(i,top) << endl;
+                if(best->getResult() > newc->getResult() && zbyvaFigurek(newc) == 0){
+                    best = newc;
+                    cout << "newbest" << best->getResult() << endl;
+                }
+                //cout << best->getResult() << " " << newc->getResult() << " " << zbyvaFigurek(newc) << endl;
                 
             }
+            
         }
-            
-            
-             // hejbej se jen kam to ma smysl  
-             // hledej maximum z jevsloupci/jevradku, pokud se tam muzes hnout
-             // hledej jen sloupce kde jsou figurky
-             // kdyz ve stejnem radku je kralovna hledej radky 
         
-        int fig = 4;
-        Souradnice posun = vez;
+        }
         
-        for(int i = 0; i<counter; i++){
-            
-            if(i == delimiter) {fig = 8;posun = kralovna;}
-            if(i == delimiter2){fig = 4;posun = vez;}
-            //cout << fig;
-            //branch[i].print();
-            Container * c = new Container(top->getSize(), top->getK());
-            c->setPole(top->getPole());
-            c->setResult(top->getResult());
-            if(fig == 4) c->addResult(10);
-            else c->addResult(15);
-            if( c->getValue(branch[i].x,branch[i].y) != 4 && c->getValue(branch[i].x,branch[i].y) != 8){
-              //cout << "skacu: [" << branch[i].x << "," << branch[i].y << "], value=" << c->getValue(branch[i].x,branch[i].y) << endl;
-                //fig + "[" + branch[i].x + "," branch[i].y + "];"
-                Souradnice s;
-                s.x = branch[i].x; s.y = branch[i].y; s.fig=fig;
-                c->addHistory(s);
                 
-              presunFigurku(branch[i],posun,fig,c);
-            } else { 
-                cout << "error " << c->getValue(branch[i].x,branch[i].y) << endl;
-                cout << "Q:";
-                kralovna.print();
-                        
-                
-                c->print();
-                break;
-            }
-            
-            
-            //c->print();
-            if(!c->overLimit() && zbyvaFigurek(c) > 0){
-              zasobnik.push(c);
-            }
-            else if(best == NULL || best->getResult() > c->getResult()){
-                best = c;
-            }
-            
-        }   
-        
     }
-    cout << "BEST:" << endl;
-        best->print();
-        Souradnice * result = best->getHistory();
-        for(int i = 0 ; i < best->getCounter(); i++){
-            result[i].print();
-        }
+    best->print();
+    cout << best->getResult();
+    cout <<"max-stack-size:" << max << endl;
+        
         
 }
