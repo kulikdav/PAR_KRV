@@ -41,7 +41,8 @@ Souradnice najdiVez(Container *c){
             if(pole[i][j] == fig) return Souradnice(i,j);
         }
     }
-    c->print();
+    //c->print();
+    
     return Souradnice(-1,-1);
 }
 Souradnice  najdiKralovnu(Container *c){
@@ -224,7 +225,7 @@ Souradnice * hledejVsloupci(Souradnice s, Container * c, Souradnice * f){
     // nahore
     if(x > 0){
       for(int i = x-1; i >= 0; i--){
-          if( pole[x][i] == 4 )break;
+          if( pole[i][y] == 4 )break;
         if(pole[i][y] == 1){
             Souradnice d(i,y);
             f[0] = d;
@@ -236,7 +237,7 @@ Souradnice * hledejVsloupci(Souradnice s, Container * c, Souradnice * f){
     // dole
     if(x < (n-1)){
       for(int i = x+1; i < n; i++){
-        if( pole[x][i] == 4 )break;
+        if( pole[i][y] == 4 )break;
         if(pole[i][y] == 1){
             Souradnice d(i,y);
             f[1] = d;

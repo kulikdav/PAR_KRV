@@ -16,16 +16,25 @@ using namespace std;
     int x;
     int y;
     Souradnice(){
-        this->x = 0;
-        this->y = 0;
+        this->x = -1;
+        this->y = -1;
+        this->fig = -1;
     }
     Souradnice(int x, int y){
         this->x = x;
         this->y = y;
+        this->fig = -1;
+    }
+    Souradnice(int x, int y, int fig){
+        this->x = x;
+        this->y = y;
+        this->fig = fig;
     }
     void print(){
-        if(this->fig > 0) cout << fig;
-        cout << "[" << this->x << "," << this->y << "]" << endl;
+        if(this->x != -1 && this->y != -1){
+          if(this->fig > 0) cout << fig;
+          cout << "[" << this->x << "," << this->y << "]" << endl;
+        }
     }
     bool isValid(){
         if(this->x != -1 && this->y != -1) return true;
@@ -52,6 +61,7 @@ public:
     int getResult();
     int getUpperLimit();
     void setPole(int ** p);
+    void setHistory(Souradnice * s);
     void setResult(int res);
     void addResult(int add);
     bool overLimit();
@@ -59,6 +69,7 @@ public:
     Souradnice * getHistory();
     void addHistory(Souradnice s);
     int getCounter(){return this->counter;}
+    void setCounter(int c){ this->counter = c;}
     
     
     

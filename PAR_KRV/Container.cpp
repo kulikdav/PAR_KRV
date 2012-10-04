@@ -23,6 +23,7 @@ Container::Container(int n, int k){
     this->result = 0;
     if( n < 5) cout << "n je mimo povoleny rozsah";
     history = new Souradnice[n*n];
+    
      pole = new int*[n];
      for(int i = 0; i < n; i++){
          pole[i] = new int[n];
@@ -36,7 +37,7 @@ Container::Container(int n, int k){
      
      
      if(n > k || ((n*(n+1)/2)) < k ){
-         cout << "k je mimo povoleny rozsah";     
+         //cout << "k je mimo povoleny rozsah";     
      }
     
 }
@@ -62,6 +63,16 @@ void Container::print(){
 
 void Container::setX(Souradnice s, int fig){
     pole[s.x][s.y] = fig;
+}
+void Container::setHistory(Souradnice * h){
+    history = new Souradnice[n*n];
+     
+     
+     for(int i = 0; i < n*n; i++){
+         history[i].x = h[i].x;
+         history[i].y = h[i].y;
+         history[i].fig = h[i].fig;
+     }
 }
 int ** Container::getPole(){
     return this->pole;
@@ -107,11 +118,7 @@ int Container::getValue(int x, int y){
     return this->pole[x][y];
 }
 void Container::addHistory(Souradnice s){
-    Souradnice c;
-    c.x = s.x;
-    c.y = s.y;
-    c.fig = s.fig;
-    this->history[this->counter++] = c;
+    this->history[this->counter++] = s;
 }
 Souradnice * Container::getHistory(){
     return this->history;
