@@ -1,0 +1,184 @@
+/* 
+ * File:   main.cpp
+ * Author: dawe
+ *
+ * Created on October 3, 2012, 12:40 PM
+ */
+
+#include <cstdlib>
+#include <iostream>
+#include <stack>
+#include "Container.h"
+#include "common.h"
+#include <time.h>
+
+using namespace std;
+
+int main(int argc, char** argv) {
+    // 110 ~ 3m
+    //114 ~ 16m
+    int size = 15;
+    int k = (size * (size - 1)) / 2;
+    stack<Container *> zasobnik;
+    Container * test = new Container(size, k);
+    Container * best = new Container(size, k);
+    best->setResult(k * 20);
+    test->setVez(1);
+    test->setKral(0);
+    for (int i = 0; i < k - 1; i++) {
+        int rand = randInt(size * size);
+        if (!test->isFig(rand)) {
+            test->addFig(rand);
+        } else i--;
+    }
+
+    cout << "init state" << endl;
+    test->printf();
+    zasobnik.push(test);
+    int pocet = 0;
+    int pocet_d = 0;
+
+    while (!zasobnik.empty()) {
+
+
+        Container * top = zasobnik.top();
+        if (top->getVez() > (size * size)) {
+            cout << "vez overflow ";
+            break;
+        }
+        zasobnik.pop();
+        cout << zasobnik.size() << " ";
+        cout << (top->getResult() + top->zbyvaFigurek()*10) << " - " << best->getResult() << " ";
+        cout << pocet << " / " << pocet_d << "->" << (pocet - (pocet_d + zasobnik.size()));
+        cout << " k:" << top->getKral() << " v:" << top->getVez() << " z:" << top->zbyvaFigurek();
+
+        //cout << endl;
+
+        int mincena = top->getResult() + (top->zbyvaFigurek()*10);
+        if (mincena > best->getResult() - 10) {
+            delete top;
+            pocet_d++;
+
+        } else {
+            int * branch = new int[12 + 2 * size];
+            for (int i = 0; i < 12 + size + size; i++) {
+                branch[i] = -1;
+            }
+            int kral = top->getKral();
+            int vez = top->getVez();
+
+            hledejVSloupci(vez, top, branch);
+            hledejVRadku(vez, top, branch);
+
+            //prvni redukce = pokud muze vez, nema cenu delat neco jineho. check = true <=> vez muze
+            bool check1 = false;
+            for (int i = 0; i < 4; i++) {
+                if (branch[i] != -1) check1 = true;
+                if (branch[i] > size*size){
+                    cout << "branch overflow 1 ";
+                    break;
+                            
+                }
+            }
+            if (!check1) {
+                int branchcounter = 12;
+                hledejVSloupci(kral, top, (branch + 4));
+                hledejVRadku(kral, top, (branch + 4));
+                hledejSikmo1(kral, top, (branch + 4));
+                hledejSikmo2(kral, top, (branch + 4));
+                /*
+                int maxr = 0, maxs = 0;
+                for (int i = 0; i < size; i++) {
+                    int r = jeVRadkuFigurka(i*size, top);
+                    int s = jeVeSloupciFigurka(i, top);
+                    if (r > maxr) maxr = r;
+                    if (s > maxs) maxs = s;
+                }
+                for (int i = 0; i < size; i++) {
+                    if (maxr >= maxs)
+                        if (jeVRadkuFigurka(i * size, top) == maxr && maxr != 0) branch[branchcounter++] = ((i * size)+(vez % size));
+                    if (maxs >= maxr)
+                        if (jeVeSloupciFigurka(i, top) == maxs && maxs != 0) branch[branchcounter++] = (vez - (vez % size) + i);
+                }*/
+            }
+            bool check2 = false;
+            for(int i = 0; i < 12; i++){
+                if(branch[i] > -1 && branch[i] < (size*size)) check2 = true;
+            }
+            if(!check2){
+                cout << " no more available moves";
+                for (int i = 0; i < size; i++) {
+                    int r = jeVRadkuFigurka(i*size, top);
+                    int s = jeVeSloupciFigurka(i, top);
+                    if (r > 0) cout << "radek " << i << " " << r << endl;
+                    if (s > 0) cout << "sloupec " << i << " " << s << endl;
+                }
+                break;
+            }
+            
+            for (int i = (11 + size + size); i >= 0; i--) {
+                if (branch[i] != -1 && branch[i] != kral && branch[i] != vez ) {
+
+                    Container *newc = new Container(size, k);
+                    pocet++;
+                    newc->setResult(top->getResult());
+                    newc->setPole(top->getPole());
+                    newc->setKral(top->getKral());
+                    newc->setVez(top->getVez());
+                    newc->addResult(10);
+                    if (branch[i] > (size * size)) {
+                        cout << "branch overflow";
+                        break;
+                    }
+                    if (i < 4 || i > 12) {
+
+                        newc->posunFigurku(branch[i], 4);
+                        
+                    } else {
+                        newc->posunFigurku(branch[i], 8);
+                        newc->addResult(5);
+                    }
+                    //cout << endl << newc->zbyvaFigurek() << endl;
+                    //newc->printf();
+                    if (newc->zbyvaFigurek() > 0) {
+                        int minPrice = newc->getResult() + (10 * newc->zbyvaFigurek());
+                        if (minPrice < best->getResult()) {
+                            zasobnik.push(newc);
+                            //cout << "pushed" << endl;
+
+                        }
+                    } else if (best->getResult() > newc->getResult() && newc->zbyvaFigurek() == 0) {
+                        best->setPole(newc->getPole());
+                        best->setResult(newc->getResult());
+                        best->setKral(newc->getKral());
+                        best->setVez(newc->getVez());
+                        cout << "newbest" << best->getResult() << endl;
+                        best->printf();
+                        delete newc;
+                        pocet_d++;
+
+                    } else {
+                        delete newc;
+                        pocet_d++;
+                    };
+                }
+            }
+            cout << " ";
+            for(int i = 0; i < 4; i++){
+                cout << branch[i] << " ";
+            }
+            cout<< endl;
+            Container * x = zasobnik.top();
+            delete branch;
+            delete top;
+            pocet_d++;
+        }
+    }
+
+    cout << "best:" << endl;
+    best->printf();
+    best->print();
+    cout << "vytvoreno / zniceno = " << pocet << " / " << pocet_d << endl;
+
+}
+
