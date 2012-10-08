@@ -10,19 +10,16 @@
 #include <stack>
 #include "Container.h"
 #include "common.h"
-#include <time.h>
 
 using namespace std;
 
 int main(int argc, char** argv) {
-    // k = 2*size
-    // 14 ~ 24s
-    // 16 ~ 1m34
-    // 17 ~ 
-    
-    int size = 17;
-    //int k = (size * (size - 1)) / 2;
-    int k = 2 * size;
+
+
+
+    int size = 16;
+    int k = 2*size +14;
+    //int k = 2*size;
     int best_possible = k * 10;
     stack<Container *> zasobnik;
     Container * test = new Container(size, k);
@@ -49,24 +46,22 @@ int main(int argc, char** argv) {
     while (!zasobnik.empty()) {
         Container * top = zasobnik.top();
         zasobnik.pop();
-
-
-
-        //top->printf();
-
-
         if (top->zbyvaFigurek() == 0 && top->getResult() < best->getResult()) {
             best->setResult(top->getResult());
+            best->setKral(top->getKral());
+            best->setVez(top->getVez());
+            best->setPole(top->getPole());
             cout << "newbest found: " << best->getResult() << " " << zasobnik.size() << endl;
             if (best->getResult() == best_possible) {
                 cout << "nalezena spodni mez" << endl;
                 break;
             }
-
         }
-
-
         int mincena = top->getResult() + (top->zbyvaFigurek()*10);
+        //cout << mincena << endl;
+        if (mincena >= k * 20) {
+            break;
+        }
         //cout << zasobnik.size() << " " << top->getResult() << " " << top->zbyvaFigurek() << "   " << best->getResult() << " " << p << " " << pd << endl;
         if (mincena >= best->getResult()) {
             delete top;
@@ -74,10 +69,8 @@ int main(int argc, char** argv) {
         } else {
             int * branchvez = new int [4];
             int * branchkral = new int [8];
-
             int vez = top->getVez();
             int kral = top->getKral();
-
             //vez
             hledejVRadku(vez, top, branchvez);
             hledejVSloupci(vez, top, branchvez);
@@ -137,6 +130,7 @@ int main(int argc, char** argv) {
                         ps->addResult(10);
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
                         if (cena < best->getResult()) {
+                        //if (cena < k * 20) {
                             zasobnik.push(ps);
                         } else {
                             pd++;
@@ -145,25 +139,6 @@ int main(int argc, char** argv) {
                     }
                 }
             } else {
-                for (int i = 0; i < 8; i++) {
-                    if (branchkral[i] != -1) {
-                        Container *ps = new Container(size, k);
-                        p++;
-                        ps->setKral(top->getKral());
-                        ps->setResult(top->getResult());
-                        ps->setVez(top->getVez());
-                        ps->setPole(top->getPole());
-                        ps->posunFigurku(branchkral[i], 8);
-                        ps->addResult(15);
-                        int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
-                        if (cena < best->getResult()) {
-                            zasobnik.push(ps);
-                        } else {
-                            delete ps;
-                            pd++;
-                        }
-                    }
-                }
                 for (int i = 0; i < size; i++) {
                     if (posunRadek[i] == 1) {
                         Container *ps = new Container(size, k);
@@ -176,6 +151,7 @@ int main(int argc, char** argv) {
                         ps->addResult(10);
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
                         if (cena < best->getResult()) {
+                        //if (cena < k * 20) {
                             zasobnik.push(ps);
                         } else {
                             delete ps;
@@ -183,8 +159,8 @@ int main(int argc, char** argv) {
                         }
                     }
                 }
-                for(int i = 0; i < size; i++){
-                    if(posunSloup[i] != -1){
+                for (int i = 0; i < size; i++) {
+                    if (posunSloup[i] != -1) {
                         Container *ps = new Container(size, k);
                         p++;
                         ps->setKral(top->getKral());
@@ -195,6 +171,7 @@ int main(int argc, char** argv) {
                         ps->addResult(10);
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
                         if (cena < best->getResult()) {
+                        //if (cena < k * 20) {
                             zasobnik.push(ps);
                         } else {
                             delete ps;
@@ -202,9 +179,26 @@ int main(int argc, char** argv) {
                         }
                     }
                 }
-
-
-
+                for (int i = 0; i < 8; i++) {
+                    if (branchkral[i] != -1) {
+                        Container *ps = new Container(size, k);
+                        p++;
+                        ps->setKral(top->getKral());
+                        ps->setResult(top->getResult());
+                        ps->setVez(top->getVez());
+                        ps->setPole(top->getPole());
+                        ps->posunFigurku(branchkral[i], 8);
+                        ps->addResult(15);
+                        int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
+                        if (cena < best->getResult()) {
+                        //if (cena < k * 20) {
+                            zasobnik.push(ps);
+                        } else {
+                            delete ps;
+                            pd++;
+                        }
+                    }
+                }
             }
             // uklid
             delete branchvez;
@@ -213,7 +207,10 @@ int main(int argc, char** argv) {
             delete posunRadek;
             delete top;
             pd++;
+
         }
     }
     cout << "best: " << best->getResult();
+    cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
+    best->printf();
 }
