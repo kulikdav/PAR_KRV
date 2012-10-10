@@ -12,6 +12,12 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="data" displayName="data" projectFiles="true">
+        <itemPath>data/TestFile-(15x15)-48.txt</itemPath>
+        <itemPath>data/TestFile-(16x16)-48.txt</itemPath>
+        <itemPath>data/TestFile-(16x16)-50.txt</itemPath>
+        <itemPath>data/TestFile-(16x16)-55.txt</itemPath>
+      </logicalFolder>
       <itemPath>Container.cpp</itemPath>
       <itemPath>Container.h</itemPath>
       <itemPath>common.cpp</itemPath>
@@ -30,6 +36,9 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>data</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">

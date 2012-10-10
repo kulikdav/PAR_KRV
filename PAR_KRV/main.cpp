@@ -7,18 +7,59 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <string>
+#include <fstream>
 #include <stack>
 #include "Container.h"
 #include "common.h"
 
 using namespace std;
 
+//#define SOUBOR "data/10x10-60.txt"
+#define SOUBOR "data/TestFile-(16x16)-50.txt"
+
 int main(int argc, char** argv) {
 
+//    ofstream myfile;
+//    myfile.open(SOUBOR, ios::out);
+//    
+//    string line;
+    int size,k,Q,V;
 
+    char *inname = SOUBOR;
+    ifstream infile(inname);
+    
+    int * figures = NULL;
 
-    int size = 16;
-    int k = 2*size +14;
+    if (!infile) {
+        cout << "There was a problem opening file "
+             << inname
+             << " for reading."
+             << endl;
+        return 0;
+    } else {
+        cout << "Opened " << inname << " for reading." << endl;
+        infile >> size;
+        infile >> k;
+        infile >> Q;
+        infile >> V;
+        
+        figures = new int[k];
+        //int figs[k];
+        int i = 0;
+        
+        while ((!infile.eof())&&(i<k)){
+            //infile >> figs[i];
+            infile >> figures[i];
+            i++;
+        }
+        
+        cout << "From " << k << " expected figures, " << i << " was loaded." << endl;
+
+    }
+
+    //int size = 16;
+    //int k = 2*size +16;
     //int k = 2*size;
     int best_possible = k * 10;
     stack<Container *> zasobnik;
@@ -28,13 +69,19 @@ int main(int argc, char** argv) {
 
     cout << "initial best: " << best->getResult() << " " << k << endl;
     cout << "best_possible: " << best_possible << endl;
-    test->setVez(3);
-    test->setKral(0);
+    //test->setVez(3);
+    test->setVez(Q);
+    //test->setKral(0);
+    test->setKral(V);
+//    for (int i = 0; i < k; i++) {
+//        int rand = randInt(size * size);
+//        if (!test->isFig(rand)) {
+//            test->addFig(rand);
+//        } else i--;
+//    }
+    
     for (int i = 0; i < k; i++) {
-        int rand = randInt(size * size);
-        if (!test->isFig(rand)) {
-            test->addFig(rand);
-        } else i--;
+        test->addFig(figures[i]);
     }
 
     cout << "init state:" << endl;
@@ -214,3 +261,17 @@ int main(int argc, char** argv) {
     cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
     best->printf();
 }
+
+//bool inputReader(){
+//    string STRING;
+//    ifstream infile;
+//    infile.open ("names.txt");
+//    while(!infile.eof) // To get you all the lines.
+//    {
+//            getline(infile,STRING); // Saves the line in STRING.
+//            cout<<STRING; // Prints our STRING.
+//    }
+//    infile.close();
+//    system ("pause");
+//
+//}
