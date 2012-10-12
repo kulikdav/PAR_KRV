@@ -36,7 +36,16 @@ public:
     void addResult(int add){this->result += add;}
     int zbyvaFigurek();
     void posunFigurku(int dest, int fig);
+    void printHistroy();
     
+    int * getHistoryQ(){return this->historyKralovna;};
+    int * getHistoryV(){return this->historyVez;};
+    int getHistoryCount(){return this->historyCount;};
+    
+    void setHistoryQ(int * hist);
+    void setHistoryV(int * hist);
+    void setHistoryCount(int count){this->historyCount = count;};
+
 private:
     int n;
     int k;
@@ -47,6 +56,10 @@ private:
     int counter;
     int vez;
     int kralovna;
+    
+    int * historyVez;
+    int * historyKralovna;
+    int historyCount;
     
 };
 

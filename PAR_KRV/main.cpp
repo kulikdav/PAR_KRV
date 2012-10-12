@@ -16,7 +16,7 @@
 using namespace std;
 
 //#define SOUBOR "data/10x10-60.txt"
-#define SOUBOR "data/TestFile-(16x16)-50.txt"
+#define SOUBOR "data/TestFile-(5x5)-10.txt"
 
 int main(int argc, char** argv) {
 
@@ -98,6 +98,9 @@ int main(int argc, char** argv) {
             best->setKral(top->getKral());
             best->setVez(top->getVez());
             best->setPole(top->getPole());
+            best->setHistoryCount(top->getHistoryCount());
+            best->setHistoryQ(top->getHistoryQ());
+            best->setHistoryV(top->getHistoryV());
             cout << "newbest found: " << best->getResult() << " " << zasobnik.size() << endl;
             if (best->getResult() == best_possible) {
                 cout << "nalezena spodni mez" << endl;
@@ -173,6 +176,9 @@ int main(int argc, char** argv) {
                         ps->setResult(top->getResult());
                         ps->setVez(top->getVez());
                         ps->setPole(top->getPole());
+                        ps->setHistoryCount(top->getHistoryCount());
+                        ps->setHistoryQ(top->getHistoryQ());
+                        ps->setHistoryV(top->getHistoryV());
                         ps->posunFigurku(branchvez[i], 4);
                         ps->addResult(10);
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
@@ -194,6 +200,9 @@ int main(int argc, char** argv) {
                         ps->setResult(top->getResult());
                         ps->setVez(top->getVez());
                         ps->setPole(top->getPole());
+                        ps->setHistoryCount(top->getHistoryCount());
+                        ps->setHistoryQ(top->getHistoryQ());
+                        ps->setHistoryV(top->getHistoryV());
                         ps->posunFigurku(((x * size) + i), 4);
                         ps->addResult(10);
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
@@ -214,6 +223,9 @@ int main(int argc, char** argv) {
                         ps->setResult(top->getResult());
                         ps->setVez(top->getVez());
                         ps->setPole(top->getPole());
+                        ps->setHistoryCount(top->getHistoryCount());
+                        ps->setHistoryQ(top->getHistoryQ());
+                        ps->setHistoryV(top->getHistoryV());
                         ps->posunFigurku(posunSloup[i], 4);
                         ps->addResult(10);
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
@@ -234,6 +246,9 @@ int main(int argc, char** argv) {
                         ps->setResult(top->getResult());
                         ps->setVez(top->getVez());
                         ps->setPole(top->getPole());
+                        ps->setHistoryCount(top->getHistoryCount());
+                        ps->setHistoryQ(top->getHistoryQ());
+                        ps->setHistoryV(top->getHistoryV());
                         ps->posunFigurku(branchkral[i], 8);
                         ps->addResult(15);
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
@@ -260,18 +275,6 @@ int main(int argc, char** argv) {
     cout << "best: " << best->getResult();
     cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
     best->printf();
+    best->printHistroy();
 }
 
-//bool inputReader(){
-//    string STRING;
-//    ifstream infile;
-//    infile.open ("names.txt");
-//    while(!infile.eof) // To get you all the lines.
-//    {
-//            getline(infile,STRING); // Saves the line in STRING.
-//            cout<<STRING; // Prints our STRING.
-//    }
-//    infile.close();
-//    system ("pause");
-//
-//}

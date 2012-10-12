@@ -24,9 +24,17 @@ Container::Container(int n, int k){
     this->result = 0;
     this->vez = -1;
     this->kralovna = -1;
+    this->historyVez = new int[n*n];
+    this->historyKralovna = new int[n*n];
+    this->historyCount = 0;
     //history = new Souradnice[n*n];
     pole = new int[k];
     for(int i = 0; i < k; i++) pole[i] = -1;
+    
+    for (int i = 0; i < n*n; i++) {
+        historyVez[i] = -1;
+        historyKralovna[i] = -1;
+    }
 } 
 
 Container::Container(const Container& orig) {
@@ -81,9 +89,11 @@ int Container::getVez(){
 }
 void Container::setVez(int pos){
     this->vez = pos;
+    this->historyVez[this->historyCount] = pos;
 }
 void Container::setKral(int pos){
     this->kralovna = pos;
+    this->historyKralovna[this->historyCount] = pos;
 }
 void Container::addFig(int pos){
     this->pole[this->counter++] = pos; 
@@ -94,6 +104,7 @@ int Container::getSize(){
 int * Container::getPole(){
     return this->pole;
 }
+
 void Container::setPole(int * pole){
     for(int i = 0; i < k; i++){
         this->pole[i] = pole[i];
@@ -107,9 +118,31 @@ int Container::zbyvaFigurek(){
     return counter;
 }
 
+void Container::setHistoryQ(int* hist){
+    for (int i = 0; i < n*n; i++){
+        this->historyKralovna[i] = hist[i];
+    }
+}
+
+void Container::setHistoryV(int* hist){
+    for (int i = 0; i < n*n; i++){
+        this->historyVez[i] = hist[i];
+    }
+}
+
 void Container::posunFigurku(int dest, int fig){
-    if(fig == 4) vez = dest;
-    else if(fig == 8) kralovna = dest;
+    if(fig == 4){
+        vez = dest;
+        this->historyVez[historyCount] = dest;
+        this->historyKralovna[historyCount] = -1;
+        this->historyCount++;
+    }
+    else if(fig == 8){
+        kralovna = dest;
+        this->historyKralovna[historyCount] = dest;
+        this->historyVez[historyCount] = -1;
+        this->historyCount++;
+    }
     else {
         cout << "error";
     }
@@ -119,4 +152,20 @@ void Container::posunFigurku(int dest, int fig){
                 pole[i] = -1;
         }
     }
+}
+
+void Container::printHistroy(){ 
+    cout << "Tahy vezi: ";
+    for (int i = 0; i < (n*n); i++){
+        if (historyVez[i] == -1) cout << "x -> ";
+        else cout << historyVez[i] << " -> ";
+    }
+    cout << endl;
+    
+    cout << "Tahy kralovnou: ";
+    for (int i = 0; i < (n*n); i++){
+        if (historyKralovna[i] == -1) cout << "x -> ";
+        else cout << historyVez[i] << " -> ";
+    }
+    cout << endl;
 }
