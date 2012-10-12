@@ -26,8 +26,8 @@ Container::Container(int n, int k){
     this->kralovna = -1;
     this->historyVez = new int[n*n];
     this->historyKralovna = new int[n*n];
-    this->historyCount = 0;
-    //history = new Souradnice[n*n];
+    this->historyCount = 1;
+    
     pole = new int[k];
     for(int i = 0; i < k; i++) pole[i] = -1;
     
@@ -37,15 +37,32 @@ Container::Container(int n, int k){
     }
 } 
 
+//Container::Container(int n, int k, Container * orig){
+//    this->original = orig;
+//    
+//    this->upperLimit = 20*k;
+//    this->n = n;
+//    this->k = k;
+//    this->counter = 0;
+//    this->result = 0;
+//    this->vez = -1;
+//    this->kralovna = -1;
+//    
+//    pole = new int[k];
+//    for(int i = 0; i < k; i++) pole[i] = -1;
+//} 
+
 Container::Container(const Container& orig) {
     
 }
 
 Container::~Container() { 
     delete [] pole;
+    delete [] historyKralovna;
+    delete [] historyVez;
 }
 void Container::printf(){
-    cout << endl << kralovna << "--" << vez << endl;
+    cout << endl << "K(" << kralovna << ") -- V(" << vez << ")" << endl;
     for(int i = 0; i < (n*n); i++){
         if(kralovna == i) cout << 8;
         else if(vez == i) cout << 4;
@@ -89,11 +106,11 @@ int Container::getVez(){
 }
 void Container::setVez(int pos){
     this->vez = pos;
-    this->historyVez[this->historyCount] = pos;
+    //this->historyVez[this->historyCount] = pos;
 }
 void Container::setKral(int pos){
     this->kralovna = pos;
-    this->historyKralovna[this->historyCount] = pos;
+    //this->historyKralovna[this->historyCount] = pos;
 }
 void Container::addFig(int pos){
     this->pole[this->counter++] = pos; 
@@ -130,17 +147,29 @@ void Container::setHistoryV(int* hist){
     }
 }
 
+void Container::setSpecificHistory(int fig, int histCount, int pos){
+    if(fig == 8){
+        this->historyKralovna[histCount] = pos;
+    } else if (fig == 4){
+        this->historyVez[histCount] = pos;
+    }
+}
+
 void Container::posunFigurku(int dest, int fig){
     if(fig == 4){
         vez = dest;
         this->historyVez[historyCount] = dest;
+        this->historyVez[historyCount+1] = -2;
         this->historyKralovna[historyCount] = -1;
+        this->historyKralovna[historyCount+1] = -2;
         this->historyCount++;
     }
     else if(fig == 8){
         kralovna = dest;
         this->historyKralovna[historyCount] = dest;
+        this->historyKralovna[historyCount+1] = -2;
         this->historyVez[historyCount] = -1;
+        this->historyVez[historyCount+1] = -2;
         this->historyCount++;
     }
     else {
@@ -155,17 +184,21 @@ void Container::posunFigurku(int dest, int fig){
 }
 
 void Container::printHistroy(){ 
-    cout << "Tahy vezi: ";
+    cout << "Tahy vezi:      ";
     for (int i = 0; i < (n*n); i++){
-        if (historyVez[i] == -1) cout << "x -> ";
+        if (historyVez[i] == -2) break;
+        if (historyVez[i] == -1) cout << "-> -> ";
+        
         else cout << historyVez[i] << " -> ";
     }
-    cout << endl;
+    cout << "END" << endl;
     
     cout << "Tahy kralovnou: ";
     for (int i = 0; i < (n*n); i++){
-        if (historyKralovna[i] == -1) cout << "x -> ";
-        else cout << historyVez[i] << " -> ";
+        if (historyKralovna[i] == -2) break;
+        if (historyKralovna[i] == -1) cout << "-> -> ";
+        
+        else cout << historyKralovna[i] << " -> ";
     }
-    cout << endl;
+    cout << "END" << endl;
 }

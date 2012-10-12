@@ -16,7 +16,7 @@
 using namespace std;
 
 //#define SOUBOR "data/10x10-60.txt"
-#define SOUBOR "data/TestFile-(5x5)-10.txt"
+#define SOUBOR "data/TestFile-(11x11)-65.txt"
 
 int main(int argc, char** argv) {
 
@@ -70,15 +70,17 @@ int main(int argc, char** argv) {
     cout << "initial best: " << best->getResult() << " " << k << endl;
     cout << "best_possible: " << best_possible << endl;
     //test->setVez(3);
-    test->setVez(Q);
+    test->setVez(V);
     //test->setKral(0);
-    test->setKral(V);
+    test->setKral(Q);
 //    for (int i = 0; i < k; i++) {
 //        int rand = randInt(size * size);
 //        if (!test->isFig(rand)) {
 //            test->addFig(rand);
 //        } else i--;
 //    }
+    test->setSpecificHistory(4,0,V);
+    test->setSpecificHistory(8,0,Q);
     
     for (int i = 0; i < k; i++) {
         test->addFig(figures[i]);

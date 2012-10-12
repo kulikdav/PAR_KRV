@@ -15,6 +15,7 @@ struct Container {
 public: 
     Container();
     Container(int n, int k);
+    Container(int n, int k, Container* orig);
     Container(const Container& orig);
     virtual ~Container();
     
@@ -45,11 +46,15 @@ public:
     void setHistoryQ(int * hist);
     void setHistoryV(int * hist);
     void setHistoryCount(int count){this->historyCount = count;};
+    
+    void setSpecificHistory(int fig, int histCount, int pos);
 
 private:
     int n;
     int k;
     int * pole;
+    
+    Container * original;
     
     int result;
     int upperLimit;
