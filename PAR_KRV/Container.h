@@ -15,12 +15,12 @@ struct Container {
 public: 
     Container();
     Container(int n, int k);
-    Container(int n, int k, Container* orig);
     Container(const Container& orig);
     virtual ~Container();
     
     void printf();
     void print();
+    void printTahCount();
     void recursivePrint();
     int getK();
     int getSize();
@@ -38,36 +38,23 @@ public:
     void addResult(int add){this->result += add;}
     int zbyvaFigurek();
     void posunFigurku(int dest, int fig);
+    void posunFigurkuBezHistorie(int dest, int fig);
     int getTahCount(){return this->tahCount;};
     void setTahCount(int count);
     
-    Container * getOriginal(){return this->original;};
-    Container * getThis(){return this;};
-    void setOrigContainer(Container * orig){this->original = orig;};
-    
-    //int * getOriginalPole(){return this->originalPole;};
-    //void setOriginalPole(int * pole);
-    
-    
-//    void printHistroy();
-//    
-//    int * getHistoryQ(){return this->historyKralovna;};
-//    int * getHistoryV(){return this->historyVez;};
-//    int getHistoryCount(){return this->historyCount;};
-//    
-//    void setHistoryQ(int * hist);
-//    void setHistoryV(int * hist);
-//    void setHistoryCount(int count){this->historyCount = count;};
-//    
-//    void setSpecificHistory(int fig, int histCount, int pos);
+    void printHistroy();
+    int * getHistoryQV(){ return this->historyVQ;};
+    int getHistoryCount(){return this->historyCount;};
+    void setHistoryQV(int * history);
+    void setInitialHistory(int Q, int V);
+    void setHistoryCount(int count){this->historyCount = count;};
 
 private:
     int n;
     int k;
     int * pole;
     
-    Container * original;
-    //int * originalPole;
+    //Container * original;
     
     int result;
     int upperLimit;
@@ -76,9 +63,11 @@ private:
     int vez;
     int kralovna;
     
+    int * historyVQ;
+    
     //int * historyVez;
     //int * historyKralovna;
-    //int historyCount;
+    int historyCount;
     
 };
 

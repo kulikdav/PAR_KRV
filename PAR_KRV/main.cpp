@@ -15,15 +15,10 @@
 
 using namespace std;
 
-//#define SOUBOR "data/10x10-60.txt"
 #define SOUBOR "data/TestFile-(11x11)-65.txt"
 
 int main(int argc, char** argv) {
 
-//    ofstream myfile;
-//    myfile.open(SOUBOR, ios::out);
-//    
-//    string line;
     int size,k,Q,V;
 
     char *inname = SOUBOR;
@@ -45,11 +40,9 @@ int main(int argc, char** argv) {
         infile >> V;
         
         figures = new int[k];
-        //int figs[k];
         int i = 0;
         
         while ((!infile.eof())&&(i<k)){
-            //infile >> figs[i];
             infile >> figures[i];
             i++;
         }
@@ -58,39 +51,28 @@ int main(int argc, char** argv) {
 
     }
 
-    //int size = 16;
-    //int k = 2*size +16;
-    //int k = 2*size;
     int best_possible = k * 10;
     stack<Container *> zasobnik;
-    Container * test = new Container(size, k);
+    Container * start = new Container(size, k);
     Container * best = new Container(size, k);
     best->setResult(k * 20);
 
     cout << "initial best: " << best->getResult() << " " << k << endl;
     cout << "best_possible: " << best_possible << endl;
-    //test->setVez(3);
-    test->setVez(V);
-    //test->setKral(0);
-    test->setKral(Q);
-    test->setOrigContainer(NULL);
-    //test->setOriginalPole(NULL);
-//    for (int i = 0; i < k; i++) {
-//        int rand = randInt(size * size);
-//        if (!test->isFig(rand)) {
-//            test->addFig(rand);
-//        } else i--;
-//    }
-//    test->setSpecificHistory(4,0,V);
-//    test->setSpecificHistory(8,0,Q);
+
+    start->setVez(V);
+    start->setKral(Q);
+    
+    start->setInitialHistory(Q,V);
     
     for (int i = 0; i < k; i++) {
-        test->addFig(figures[i]);
+        start->addFig(figures[i]);
     }
 
     cout << "init state:" << endl;
-    test->printf();
-    zasobnik.push(test);
+    start->printf();
+    Container * printex = start;
+    zasobnik.push(start);
     int p = 0;
     int pd = 0;
 
@@ -104,11 +86,11 @@ int main(int argc, char** argv) {
             best->setKral(top->getKral());
             best->setVez(top->getVez());
             best->setPole(top->getPole());
-//            best->setHistoryCount(top->getHistoryCount());
-//            best->setHistoryQ(top->getHistoryQ());
+            best->setHistoryCount(top->getHistoryCount());
+            best->setHistoryQV(top->getHistoryQV());
 //            best->setHistoryV(top->getHistoryV());
             best->setTahCount(top->getTahCount());
-            best->setOrigContainer(top->getThis());
+            //best->setOrigContainer(top->getOriginal());
             //best->setOriginalPole(top->getOriginalPole());
             cout << "newbest found: " << best->getResult() << " " << zasobnik.size() << endl;
             if (best->getResult() == best_possible) {
@@ -185,8 +167,8 @@ int main(int argc, char** argv) {
                         ps->setResult(top->getResult());
                         ps->setVez(top->getVez());
                         ps->setPole(top->getPole());
-//                        ps->setHistoryCount(top->getHistoryCount());
-//                        ps->setHistoryQ(top->getHistoryQ());
+                        ps->setHistoryCount(top->getHistoryCount());
+                        ps->setHistoryQV(top->getHistoryQV());
 //                        ps->setHistoryV(top->getHistoryV());
                         ps->setTahCount(top->getTahCount());
                         //ps->setOriginalPole(top->getOriginalPole());
@@ -195,7 +177,7 @@ int main(int argc, char** argv) {
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
                         if (cena < best->getResult()) {
                         //if (cena < k * 20) {
-                            ps->setOrigContainer(top->getThis());
+                            //ps->setOrigContainer(top->getThis());
                             zasobnik.push(ps);
                         } else {
                             pd++;
@@ -212,8 +194,8 @@ int main(int argc, char** argv) {
                         ps->setResult(top->getResult());
                         ps->setVez(top->getVez());
                         ps->setPole(top->getPole());
-//                        ps->setHistoryCount(top->getHistoryCount());
-//                        ps->setHistoryQ(top->getHistoryQ());
+                        ps->setHistoryCount(top->getHistoryCount());
+                        ps->setHistoryQV(top->getHistoryQV());
 //                        ps->setHistoryV(top->getHistoryV());
                         ps->setTahCount(top->getTahCount());
                         //ps->setOriginalPole(top->getOriginalPole());
@@ -222,7 +204,7 @@ int main(int argc, char** argv) {
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
                         if (cena < best->getResult()) {
                         //if (cena < k * 20) {
-                            ps->setOrigContainer(top->getThis());
+                            //ps->setOrigContainer(top->getThis());
                             zasobnik.push(ps);
                         } else {
                             delete ps;
@@ -238,8 +220,8 @@ int main(int argc, char** argv) {
                         ps->setResult(top->getResult());
                         ps->setVez(top->getVez());
                         ps->setPole(top->getPole());
-//                        ps->setHistoryCount(top->getHistoryCount());
-//                        ps->setHistoryQ(top->getHistoryQ());
+                        ps->setHistoryCount(top->getHistoryCount());
+                        ps->setHistoryQV(top->getHistoryQV());
 //                        ps->setHistoryV(top->getHistoryV());
                         ps->setTahCount(top->getTahCount());
                         //ps->setOriginalPole(top->getOriginalPole());
@@ -248,7 +230,7 @@ int main(int argc, char** argv) {
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
                         if (cena < best->getResult()) {
                         //if (cena < k * 20) {
-                            ps->setOrigContainer(top->getThis());
+                            //ps->setOrigContainer(top->getThis());
                             zasobnik.push(ps);
                         } else {
                             delete ps;
@@ -264,8 +246,8 @@ int main(int argc, char** argv) {
                         ps->setResult(top->getResult());
                         ps->setVez(top->getVez());
                         ps->setPole(top->getPole());
-//                        ps->setHistoryCount(top->getHistoryCount());
-//                        ps->setHistoryQ(top->getHistoryQ());
+                        ps->setHistoryCount(top->getHistoryCount());
+                        ps->setHistoryQV(top->getHistoryQV());
 //                        ps->setHistoryV(top->getHistoryV());
                         ps->setTahCount(top->getTahCount());
                         //ps->setOriginalPole(top->getOriginalPole());
@@ -274,7 +256,7 @@ int main(int argc, char** argv) {
                         int cena = (ps->getResult() + (ps->zbyvaFigurek()*10));
                         if (cena < best->getResult()) {
                         //if (cena < k * 20) {
-                            ps->setOrigContainer(top->getThis());
+                            //ps->setOrigContainer(top->getThis());
                             zasobnik.push(ps);
                         } else {
                             delete ps;
@@ -296,7 +278,35 @@ int main(int argc, char** argv) {
     cout << "best: " << best->getResult();
     cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
     best->printf();
-    //best->recursivePrint();
-//    best->printHistroy();
+    best->printHistroy();
+    best->printTahCount();
+    
+    cout << "Rozpis tahu: " << endl;
+    
+    int * tahy = best->getHistoryQV();
+    
+    int i = 2;
+    printex->printf();
+    
+    while(tahy[i] != -2){
+        // every two fields apply
+        //VK VK VK VK VK
+        // Věž
+        if (tahy[i] != -1){
+            cout << "Vez skace na pole " << tahy[i] << endl;
+            printex->posunFigurkuBezHistorie(tahy[i],4);
+        }
+        i++;
+        
+        // Královna
+        if (tahy[i] != -1){
+            cout << "Kralovna skace na pole " << tahy[i] << endl;
+            printex->posunFigurkuBezHistorie(tahy[i],8);
+        }
+        
+        i++;
+        
+        printex->printf();
+    }
 }
 
