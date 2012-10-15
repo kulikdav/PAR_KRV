@@ -55,23 +55,27 @@ int main(int argc, char** argv) {
     stack<Container *> zasobnik;
     Container * start = new Container(size, k);
     Container * best = new Container(size, k);
+    Container * printex = new Container(size, k);
     best->setResult(k * 20);
 
     cout << "initial best: " << best->getResult() << " " << k << endl;
     cout << "best_possible: " << best_possible << endl;
 
     start->setVez(V);
+    printex->setVez(V);
     start->setKral(Q);
+    printex->setKral(Q);
     
     start->setInitialHistory(Q,V);
     
     for (int i = 0; i < k; i++) {
         start->addFig(figures[i]);
+        printex->addFig(figures[i]);
     }
 
     cout << "init state:" << endl;
     start->printf();
-    Container * printex = start;
+    
     zasobnik.push(start);
     int p = 0;
     int pd = 0;
@@ -308,5 +312,7 @@ int main(int argc, char** argv) {
         
         printex->printf();
     }
+    
+    cout << "Konec vizualizace tahu." << endl; 
 }
 
