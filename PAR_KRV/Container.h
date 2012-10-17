@@ -54,8 +54,6 @@ private:
     int k;
     int * pole;
     
-    //Container * original;
-    
     int result;
     int upperLimit;
     int counter;
@@ -64,9 +62,6 @@ private:
     int kralovna;
     
     int * historyVQ;
-    
-    //int * historyVez;
-    //int * historyKralovna;
     int historyCount;
     
 };

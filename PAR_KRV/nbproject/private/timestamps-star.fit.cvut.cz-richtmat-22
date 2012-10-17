@@ -1,4 +1,4 @@
-#Wed Oct 17 10:54:57 CEST 2012
+#Wed Oct 17 11:57:50 CEST 2012
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(10x10)-46.txt=t1350067608564
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-99.txt=t1350067610702
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(14x14)-51.txt=t1350067609920
@@ -70,7 +70,7 @@ c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-78.txt=t1350067611177
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(10x10)-24.txt=t1350067608377
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-77.txt=t1350067610579
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\build\\debug\\cygwin-windows\\main.o.d=t1350463908132
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\build\\debug\\cygwin-windows\\main.o.d=t1350464551714
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-39.txt=t1350067610957
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(9x9)-37.txt=t1350067608239
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-113.txt=t1350067611406
@@ -135,7 +135,7 @@ c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-87.txt=t1350067610636
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-49.txt=t1350067611007
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-123.txt=t1350067611479
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\configurations.xml=t1350464063527
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\configurations.xml=t1350464569092
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-48.txt=t1350067610411
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-95.txt=t1350067611290
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(5x5)-8.txt=t1350067607549
@@ -324,7 +324,7 @@ c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\build\\release\
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(13x13)-89.txt=t1350067609697
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-47.txt=t1350067610997
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-121.txt=t1350067611466
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\main.cpp=c1350463906381
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\main.cpp=c1350467373553
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-46.txt=t1350067610402
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-93.txt=t1350067611278
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(5x5)-6.txt=t1350067607524
@@ -447,7 +447,7 @@ c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-59.txt=t1350067610478
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(7x7)-10.txt=t1350067607712
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(10x10)-52.txt=t1350067608607
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\private\\timestamps-star.fit.cvut.cz-richtmat-22=t1350407721714
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\private\\timestamps-star.fit.cvut.cz-richtmat-22=t1350467383299
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\par_krv.exe.stackdump=t1350085685134
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-67.txt=t1350067611121
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(10x10)-13.txt=t1350067608305
@@ -473,7 +473,7 @@ c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\dist\\debug\\mi
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-81.txt=t1350067611192
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(13x13)-38.txt=t1350067609387
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-80.txt=t1350067610595
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\private\\configurations.xml=t1350464063543
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\private\\configurations.xml=t1350464569099
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(14x14)-85.txt=t1350067610111
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(12x12)-37.txt=t1350067609027
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(6x6)-18.txt=t1350067607680
@@ -486,7 +486,7 @@ c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(14x14)-46.txt=t1350067609893
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(8x8)-26.txt=t1350067607970
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(13x13)-45.txt=t1350067609423
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\makefile-debug.mk=c1350464063574
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\makefile-debug.mk=c1350464569125
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(14x14)-92.txt=t1350067610152
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(12x12)-44.txt=t1350067609062
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(11x11)-43.txt=t1350067608786
@@ -553,7 +553,7 @@ c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-20.txt=t1350067610861
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(10x10)-19.txt=t1350067608347
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-25.txt=t1350067610296
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\container.h=c1350318770287
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\container.h=c1350465703783
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(12x12)-61.txt=t1350067609148
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(7x7)-23.txt=t1350067607813
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(14x14)-24.txt=t1350067609757
@@ -582,15 +582,15 @@ c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-94.txt=t1350067611285
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(5x5)-7.txt=t1350067607544
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(10x10)-40.txt=t1350067608508
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\container.cpp=c1350318784281
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\container.cpp=c1350465674627
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-93.txt=t1350067610669
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(14x14)-98.txt=t1350067610188
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\package-debug.bash=t1350464063574
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\package-debug.bash=t1350464569134
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(11x11)-49.txt=t1350067608820
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-55.txt=t1350067611059
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(6x6)-8.txt=t1350067607585
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\package-run-star.bash=t1350398385941
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\dist\\debug\\cygwin-windows\\par_krv.exe=t1350463908882
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\dist\\debug\\cygwin-windows\\par_krv.exe=t1350464552194
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-54.txt=t1350067610450
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(14x14)-59.txt=t1350067609965
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(13x13)-58.txt=t1350067609502
@@ -599,7 +599,7 @@ c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(12x12)-57.txt=t1350067609128
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(7x7)-19.txt=t1350067607790
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(11x11)-56.txt=t1350067608855
-c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\makefile-variables.mk=c1350464063605
+c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\nbproject\\makefile-variables.mk=c1350464569156
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(16x16)-62.txt=t1350067611095
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(13x13)-19.txt=t1350067609264
 c\:\\users\\maty\\documents\\netbeansprojects\\par_krv\\par_krv\\data\\testfile-(15x15)-61.txt=t1350067610491

@@ -19,11 +19,14 @@ using namespace std;
  Výsledky
  * 16x16/45 - 3m16s
  * 16x16/55 - 10m37s
+ * 15x15/17 - 4m3s
+ * 16x16/44 - 31m40s
+ * 
  * 
  */
 
 FILE *vstup;
-#define SOUBOR "data/TestFile-(9x9)-39.txt"
+#define SOUBOR "data/TestFile-(13x13)-15.txt"
 
 int main(int argc, char** argv) {
 
@@ -314,6 +317,6 @@ int main(int argc, char** argv) {
         printex->printf();
     }
     
-    cout << "Konec vizualizace tahu." << endl; 
+    cout << "Konec vizualizace tahu." << endl;
 }
 

@@ -90,11 +90,9 @@ int Container::getVez(){
 }
 void Container::setVez(int pos){
     this->vez = pos;
-    //this->historyQV[this->historyCount] = pos;
 }
 void Container::setKral(int pos){
     this->kralovna = pos;
-    //this->historyQV[this->historyCount] = pos;
 }
 void Container::addFig(int pos){
     this->pole[this->counter++] = pos;
