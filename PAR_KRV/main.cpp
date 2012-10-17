@@ -23,7 +23,7 @@ using namespace std;
  */
 
 FILE *vstup;
-#define SOUBOR "data/TestFile-(16x16)-80.txt"
+#define SOUBOR "data/TestFile-(9x9)-39.txt"
 
 int main(int argc, char** argv) {
 
@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     
     vstup = fopen(SOUBOR,"r");
     if(vstup == NULL){
-            puts("Error");
+            puts("Error, file not found or something like that...");
             exit(1);
     }
     else printf("File opened for reading...\n");
