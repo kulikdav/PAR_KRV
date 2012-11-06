@@ -82,6 +82,9 @@ bool Container::isFig(int pos){
     }
     return false;
 }
+int Container::getK(){
+    return this->k;
+}
 int Container::getKral(){
     return this->kralovna;
 }
@@ -99,6 +102,10 @@ void Container::addFig(int pos){
 }
 int Container::getSize(){
     return this->n;
+}
+void Container::setPole(int size, int * pole){
+    this->pole = new int[size];
+    this->setPole(pole);
 }
 int * Container::getPole(){
     return this->pole;

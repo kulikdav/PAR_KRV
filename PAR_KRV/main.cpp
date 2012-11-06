@@ -21,6 +21,7 @@
 #include "Container.h"
 #include "common.h"
 #include "common_p.h"
+#include "mpi.h"
 
 using namespace std;
 
@@ -38,7 +39,9 @@ FILE *vstup;
 #define SOUBOR "data/TestFile-(5x5)-10.txt"
 
 int main(int argc, char** argv) {
-//    MPI_Init(&argc, &argv);
+    MPI_Init(&argc, &argv);
+    int flag;
+    MPI_Status status;
     int size, k, Q, V;
 
     vstup = fopen(SOUBOR, "r");
@@ -98,9 +101,9 @@ int main(int argc, char** argv) {
     int pd = 0;
 
     // Hlavní programová smyčka
-
+    int citac = 0;
     while (!zasobnik.empty()) {
-        /*
+
         citac++;
         if ((citac % CHECK_MSG_AMOUNT) == 0) {
             MPI_Iprobe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &flag, &status);
@@ -109,40 +112,36 @@ int main(int argc, char** argv) {
                 //v promenne status je tag (status.MPI_TAG), cislo odesilatele (status.MPI_SOURCE)
                 //a pripadne cislo chyby (status.MPI_ERROR)
 
-                swith(status.MPI_TAG) {
-                   a case MSG_BEST_RESULT:  // nekdo nasel nejlepsi vysledek
-                                          // porovnat s vlastnim
-                                          break;
+                switch (status.MPI_TAG) {
+                    case MSG_BEST_RESULT: // nekdo nasel nejlepsi vysledek
+                        // porovnat s vlastnim
+                        break;
                     case MSG_WORK_REQUEST: // zadost o praci, prijmout a dopovedet
-                    // zaslat rozdeleny zasobnik a nebo odmitnuti MSG_WORK_NOWORK
-                    break;
+                        // zaslat rozdeleny zasobnik a nebo odmitnuti MSG_WORK_NOWORK
+                        break;
                     case MSG_WORK_SENT: // prisel rozdeleny zasobnik, prijmout
-                    // deserializovat a spustit vypocet
-                    break;
+                        // deserializovat a spustit vypocet
+                        break;
                     case MSG_WORK_NOWORK: // odmitnuti zadosti o praci
-                    // zkusit jiny proces
-                    // a nebo se prepnout do pasivniho stavu a cekat na token
-                    break
+                        // zkusit jiny proces
+                        // a nebo se prepnout do pasivniho stavu a cekat na token
+                        break;
                     case MSG_TOKEN: //ukoncovaci token, prijmout a nasledne preposlat
-                    // - bily nebo cerny v zavislosti na stavu procesu
-                    break;
+                        // - bily nebo cerny v zavislosti na stavu procesu
+                        break;
                     case MSG_FINISH: //konec vypoctu - proces 0 pomoci tokenu zjistil, ze jiz nikdo nema praci
-                    //a rozeslal zpravu ukoncujici vypocet
-                    //mam-li reseni, odeslu procesu 0
-                    //nasledne ukoncim spoji cinnost
-                    //jestlize se meri cas, nezapomen zavolat koncovou barieru MPI_Barrier (MPI_COMM_WORLD)
-                    MPI_Finalize();
-                    exit(0);
-                    break;
-                    default: chyba("neznamy typ zpravy");
-                    break;
+                        //a rozeslal zpravu ukoncujici vypocet
+                        //mam-li reseni, odeslu procesu 0
+                        //nasledne ukoncim spoji cinnost
+                        //jestlize se meri cas, nezapomen zavolat koncovou barieru MPI_Barrier (MPI_COMM_WORLD)
+                        //MPI_Finalize();
+                        //exit(0);
+                        break;
+                    default: cout << "neznamy typ zpravy";
+                        break;
                 }
             }
         }
-        expanduj_dalsi_stavy();*/
-
-
-
         Container * top = zasobnik.back();
         zasobnik.pop_back();
         if (top->zbyvaFigurek() == 0 && top->getResult() < best->getResult()) {
@@ -369,6 +368,6 @@ int main(int argc, char** argv) {
     }
 
     cout << "Konec vizualizace tahu." << endl;
-//    MPI_Finalize();
+    MPI_Finalize();
 }
 

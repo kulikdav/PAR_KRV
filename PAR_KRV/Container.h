@@ -32,6 +32,7 @@ public:
     void addFig(int pos);
     bool isOne(int pos);
     int * getPole();
+    void setPole(int size, int * pole);
     void setPole(int * pole);
     int getResult(){return this->result;}
     void setResult(int res){this->result = res;}
