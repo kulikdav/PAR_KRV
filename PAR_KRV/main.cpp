@@ -39,11 +39,15 @@ FILE *vstup;
 #define SOUBOR "data/TestFile-(5x5)-10.txt"
 
 int main(int argc, char** argv) {
+    /* inicializace MPI, nastaveni ranku( id procesu) a rank_size ( pocet procesu )*/
     MPI_Init(&argc, &argv);
-    int flag;
+    int flag, rank, rank_size;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &rank_size);
     MPI_Status status;
-    int size, k, Q, V;
+    /* !inicializace*/
 
+    int size, k, Q, V;
     vstup = fopen(SOUBOR, "r");
     if (vstup == NULL) {
         puts("Error, file not found or something like that...");
@@ -81,22 +85,26 @@ int main(int argc, char** argv) {
     cout << "Initial best: " << best->getResult() << " " << k << endl;
     cout << "Best possible: " << best_possible << endl << endl;
 
-    start->setVez(V);
-    printex->setVez(V);
-    start->setKral(Q);
-    printex->setKral(Q);
 
-    start->setInitialHistory(Q, V);
+    /* data nahrava pouze prvni proces */
+    if (rank == 0) {
+        start->setVez(V);
+        printex->setVez(V);
+        start->setKral(Q);
+        printex->setKral(Q);
 
-    for (int i = 0; i < k; i++) {
-        start->addFig(figures[i]);
-        printex->addFig(figures[i]);
+        start->setInitialHistory(Q, V);
+
+        for (int i = 0; i < k; i++) {
+            start->addFig(figures[i]);
+            printex->addFig(figures[i]);
+        }
+
+        cout << "Init state:" << endl;
+        start->printf();
+        zasobnik.push_back(start);
     }
-
-    cout << "Init state:" << endl;
-    start->printf();
-
-    zasobnik.push_back(start);
+    /* !data ...  */
     int p = 0;
     int pd = 0;
 
@@ -333,41 +341,44 @@ int main(int argc, char** argv) {
 
         }
     }
-    cout << "Best: " << best->getResult();
-    cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
-    best->printf();
-    best->printHistroy();
-    best->printTahCount();
+    // pouze prvni proces vypisuje prubeh tahu //
+    if (rank == 0) {
+        cout << "Best: " << best->getResult();
+        cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
+        best->printf();
+        best->printHistroy();
+        best->printTahCount();
 
-    cout << "Rozpis tahu: " << endl;
+        cout << "Rozpis tahu: " << endl;
 
-    int * tahy = best->getHistoryQV();
+        int * tahy = best->getHistoryQV();
 
-    int i = 2;
-    printex->printf();
-
-    while (tahy[i] != -2) {
-        // every two fields apply
-        // VK VK VK VK VK
-        // Věž
-        if (tahy[i] != -1) {
-            cout << "Vez skace na pole " << tahy[i] << endl;
-            printex->posunFigurkuBezHistorie(tahy[i], 4);
-        }
-        i++;
-
-        // Královna
-        if (tahy[i] != -1) {
-            cout << "Kralovna skace na pole " << tahy[i] << endl;
-            printex->posunFigurkuBezHistorie(tahy[i], 8);
-        }
-
-        i++;
-
+        int i = 2;
         printex->printf();
-    }
 
-    cout << "Konec vizualizace tahu." << endl;
+        while (tahy[i] != -2) {
+            // every two fields apply
+            // VK VK VK VK VK
+            // Věž
+            if (tahy[i] != -1) {
+                cout << "Vez skace na pole " << tahy[i] << endl;
+                printex->posunFigurkuBezHistorie(tahy[i], 4);
+            }
+            i++;
+
+            // Královna
+            if (tahy[i] != -1) {
+                cout << "Kralovna skace na pole " << tahy[i] << endl;
+                printex->posunFigurkuBezHistorie(tahy[i], 8);
+            }
+
+            i++;
+
+            printex->printf();
+        }
+
+        cout << "Konec vizualizace tahu." << endl;
+    }
     MPI_Finalize();
 }
 

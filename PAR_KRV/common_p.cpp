@@ -4,14 +4,8 @@
 #define CONTAINER 1
 #define POLE 2
 
-int rank;
-int rank_size;
-MPI_Status status;
 
-void init_p() {
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm_size(MPI_COMM_WORLD, &rank_size);
-}
+MPI_Status status;
 
 void sendContainer(Container * c, int dest) {
     int k = c->getK();
