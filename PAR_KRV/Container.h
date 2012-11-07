@@ -42,10 +42,11 @@ public:
     void posunFigurkuBezHistorie(int dest, int fig);
     int getTahCount(){return this->tahCount;};
     void setTahCount(int count);
-    
+    int getQVSize();
     void printHistroy();
     int * getHistoryQV(){ return this->historyVQ;};
     int getHistoryCount(){return this->historyCount;};
+    void setHistoryQV(int size,int * history);
     void setHistoryQV(int * history);
     void setInitialHistory(int Q, int V);
     void setHistoryCount(int count){this->historyCount = count;};

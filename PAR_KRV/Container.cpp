@@ -30,6 +30,7 @@ Container::Container(int n, int k){
     
     pole = new int[k];
     for(int i = 0; i < k; i++) pole[i] = -1;
+    for(int i = 0; i < (2*n*n); i++) historyVQ[i] = -1;
     
 } 
 
@@ -125,7 +126,13 @@ int Container::zbyvaFigurek(){
     }
     return counter;
 }
-
+int Container::getQVSize(){
+    return (n*n*2);
+}
+void Container::setHistoryQV(int size, int * history){
+    this->historyVQ = new int[n*n*2];
+    this->setHistoryQV(history);
+}
 void Container::setHistoryQV(int* history){
     for (int i = 0; i < 2*n*n; i++){
         this->historyVQ[i] = history[i];
