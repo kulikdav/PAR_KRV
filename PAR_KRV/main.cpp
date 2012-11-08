@@ -10,6 +10,9 @@
 #define COLOR_W 100
 #define COLOR_B 101
 
+#define IDLE 10
+#define ACTIVE 20
+
 #define MSG_WORK_REQUEST 1000
 #define MSG_WORK_SENT    1001
 #define MSG_WORK_NOWORK  1002
@@ -40,7 +43,7 @@ using namespace std;
  */
 
 FILE *vstup;
-#define SOUBOR "data/TestFile-(10x10)-30.txt"
+#define SOUBOR "data/TestFile-(12x12)-30.txt"
 
 int main(int argc, char** argv) {
     /* inicializace MPI, nastaveni ranku( id procesu) a rank_size ( pocet procesu )*/
@@ -48,6 +51,9 @@ int main(int argc, char** argv) {
     int flag, rank, rank_size;
     double t1, t2;
     string log;
+    int stsize, sentsize;
+    int proc_state = ACTIVE;
+
 
     // barva procesoru pro ADUV;
     int proc_barva = COLOR_W;
@@ -123,7 +129,7 @@ int main(int argc, char** argv) {
     }
     MPI_Barrier(MPI_COMM_WORLD);
     log = itos(rank) + " barrier start\n";
-    logToFile(rank,log);    
+    logToFile(rank, rank_size, log);
     /* !data ...  */
     int p = 0;
     int pd = 0;
@@ -135,24 +141,26 @@ int main(int argc, char** argv) {
     bool finish = false;
 
     while (!finish) {
+        //logToFile(rank,rank_size,itos(proc_state) + "\n");
         citac++;
         if ((citac % CHECK_MSG_AMOUNT) == 0) {
 
             if (zasobnik.empty()) {
-                if (rank_size > 1) {
+                if (rank_size > 1 && proc_state != IDLE) {
                     int next_proc = (rank + 1) % rank_size;
-                    log = "empty, " + itos(rank) + " process zacina zadat o praci " + itos(next_proc) + " process\n";                    
-                    logToFile(rank, log);
+                    log = "empty, " + itos(rank) + " process zacina zadat o praci " + itos(next_proc) + " process\n";
+                    logToFile(rank, rank_size, log);
+                    proc_state = IDLE;
                     masPraciMessage(rank, next_proc);
                     proc_barva = COLOR_W;
                     // mel sem peska, posilam a nuluju
                     if (pesek > 1) {
                         log = itos(rank) + " odesila peska:" + itos(pesek) + " na " + itos(next_proc) + "\n";
-                        logToFile(rank,log);
+                        logToFile(rank, rank_size, log);
                         sendToken(pesek, next_proc);
                         pesek = 0;
                     }
-                } else {
+                } else if (rank_size == 1) {
                     // pracuju sam;
                     finish = true;
                     break;
@@ -175,7 +183,7 @@ int main(int argc, char** argv) {
                             best->setPole(r->getPole());
                             best->setHistoryQV(r->getHistoryQV());
                             log = itos(rank) + " received new best result from " + itos(message) + "\n";
-                            logToFile(rank,log);
+                            logToFile(rank, rank_size, log);
                         }
                         //cout << rank << " best result:  " << endl << best->getResult() << endl;
                         break;
@@ -183,18 +191,26 @@ int main(int argc, char** argv) {
                         // zadost o praci, prijmout a dopovedet
                         // zaslat rozdeleny zasobnik a nebo odmitnuti MSG_WORK_NOWORK
                         //cout << rank << " pozadan " << message << " o praci.  ";
-                        if (zasobnik.size() > 1) {
-                            r = zasobnik.front();
-                            mamPraciMessage(rank, message, r);
+                        sentsize = 1;
+                        stsize = zasobnik.size();
+                        if (zasobnik.size() > sentsize) {
+                            logToFile(rank, rank_size, itos(rank) + ", " + itos(stsize) + " posila na " + itos(message) + " praci o velikosti: " + itos(sentsize) + "\n");
+                            mamPraciMessage(sentsize, status.MPI_SOURCE);
+                            for (int i = 0; i < sentsize; i++) {
+                                // posli a vyhod ze zasobniku
+                                r = zasobnik.front();
+                                sendContainer(r, status.MPI_SOURCE);
+                                zasobnik.pop_front();
+                            }
                             // jestli Pi posle praci procesoru Pj, i>j, Pi nastavi barvu na B;
-                            if (message < rank) { 
+                            if (message < rank) {
                                 //cout << rank << " poslal praci na " << message << ", obarvuji " << rank << " na B" << endl;
                                 proc_barva = COLOR_B;
                             }
-                            zasobnik.pop_front();
                             //cout << rank << " odeslal praci na " << message << " stack remaining: " << zasobnik.size() << endl;
                         } else {
                             //cout << rank << " nema praci pro " << message << " stack remaining: " << zasobnik.size() << endl;
+                            logToFile(rank,rank_size, itos(rank) + " byl pozadan o " + itos(sentsize) + " prace, ale mel jen " + itos(stsize) + "\n");
                             nemamPraciMessage(message);
                         }
                         break;
@@ -202,14 +218,20 @@ int main(int argc, char** argv) {
                         // prisel rozdeleny zasobnik, prijmout
                         // deserializovat a spustit vypocet
                         //cout << rank << " process prijal praci" << endl;
-                        r = recvContainer(message, size, k);
-                        zasobnik.push_back(r);
+                        for (int i = 0; i < message; i++) {
+                            r = recvContainer(status.MPI_SOURCE, size, k);
+                            zasobnik.push_back(r);
+                        }
+                        stsize = zasobnik.size();
+                        logToFile(rank, rank_size, itos(rank) + " dostal praci o velikosti: " + itos(message) + ", new stacksize: " + itos(stsize) + "\n");
+                        proc_state = ACTIVE;
                         break;
                     case MSG_WORK_NOWORK:
                         // odmitnuti zadosti o praci
                         // zkusit jiny proces
                         // a nebo se prepnout do pasivniho stavu a cekat na token
                         //cout << rank << " dostal nowork od " << ask << endl;
+                        proc_state = ACTIVE;
                         ask = (ask + 1) % rank_size;
                         if (ask == rank) {
                             // nikdo uz nema pro me praci;
@@ -217,6 +239,7 @@ int main(int argc, char** argv) {
                         if (ask != rank) {
                             //cout << rank << " process zada o praci " << ask << " process" << endl;
                             masPraciMessage(rank, ask);
+                            proc_state = IDLE;
                         }
                         break;
                     case MSG_TOKEN:
@@ -224,24 +247,25 @@ int main(int argc, char** argv) {
                         // - bily nebo cerny v zavislosti na stavu procesu
                         // jestlize Pi obdrzi peska, a Pi ma barvu B, nastavi Peska na B
                         log = itos(rank) + " dostal peska " + itos(message) + " od " + itos(ask) + "\n";
-                        logToFile(rank,log);
+                        logToFile(rank, rank_size, log);
                         pesek = message;
                         if (proc_barva == COLOR_B) {
                             log = itos(rank) + " procesor obarvuje peska na B\n";
-                            logToFile(rank,log);
+                            logToFile(rank, rank_size, log);
                             pesek = COLOR_B;
                         }
                         // jestlize P1 obdrzi peska COLOR_W, ukonci ( rozesle vsem ostatnim zpravu finish
                         if (rank == 0 && pesek == COLOR_W) {
-                            logToFile(0,"prvni procesor dostal peska W\n");;
+                            logToFile(0, rank_size, "prvni procesor dostal peska W\n");
+                            ;
                             for (int i = 0; i < rank_size; i++) {
-                                logToFile(0,"procesor 0 rozesila zpravu finish na " + itos(i) + "\n");
+                                logToFile(0, rank_size, "procesor 0 rozesila zpravu finish na " + itos(i) + "\n");
                                 finishMessage(i);
                             }
                         }
                         // prvni zacina nove kolo, prebarvuje peska na W
                         if (rank == 0 && pesek == COLOR_B) {
-                            logToFile(0, "nove kolo, 0 dostal peska B, obarvuje na W\n");
+                            logToFile(0, rank_size, "nove kolo, 0 dostal peska B, obarvuje na W\n");
                             pesek = COLOR_W;
                         }
                         break;
@@ -253,7 +277,7 @@ int main(int argc, char** argv) {
                         //jestlize se meri cas, nezapomen zavolat koncovou barieru MPI_Barrier (MPI_COMM_WORLD)
                         //MPI_Finalize();
                         //exit(0);
-                        logToFile(rank, itos(rank) + " received finish msg\n");
+                        logToFile(rank, rank_size, itos(rank) + " received finish msg\n");
                         finish = true;
                         break;
                     default:
@@ -278,15 +302,15 @@ int main(int argc, char** argv) {
                 best->setHistoryQV(top->getHistoryQV());
                 best->setTahCount(top->getTahCount());
                 log = "newbest found: " + itos(best->getResult()) + " " + itos(rank) + ". procesorem\n";
-                logToFile(rank,log);
+                logToFile(rank, rank_size, log);
                 //cout << "newbest found: " << best->getResult() << " " << rank << ". procesorem" << endl;
                 if (best->getResult() == best_possible) {
                     log = "nalezena spodni mez\n";
-                    logToFile(rank,log);
+                    logToFile(rank, rank_size, log);
                     bestResultMessage(rank, rank_size, best);
                     log = itos(rank) + " odesila peska W na 0\n";
-                    logToFile(rank,log);
-                    sendToken(COLOR_W,0);
+                    logToFile(rank, rank_size, log);
+                    sendToken(COLOR_W, 0);
                     //break;
                 } else {
                     bestResultMessage(rank, rank_size, best);
@@ -466,12 +490,12 @@ int main(int argc, char** argv) {
             }
         }
     }
-    logToFile(rank, itos(rank) + " out of loop\n");
+    logToFile(rank, rank_size, itos(rank) + " out of loop\n");
     if (rank == 0) {
         MPI_Barrier(MPI_COMM_WORLD);
-        logToFile(0,"0 barrier end\n");
+        logToFile(0, rank_size, "0 barrier end\n");
         t2 = MPI_Wtime();
-        logResult("-------------------------------\nprocs:" + itos(rank_size) + " best:" + itos(best->getResult()) + "\nspotrebovany cas: " + itos(t2-t1) + "\n");
+        logResult("-------------------------------\nprocs:" + itos(rank_size) + " best:" + itos(best->getResult()) + "\nspotrebovany cas: " + itos(t2 - t1) + "\n");
         /*
         cout << "Best " << rank << ": " << best->getResult();
         cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
@@ -512,7 +536,7 @@ int main(int argc, char** argv) {
          */
     } else {
         MPI_Barrier(MPI_COMM_WORLD);
-        logToFile(rank, itos(rank) + " barrier end\n");
+        logToFile(rank, rank_size, itos(rank) + " barrier end\n");
     }
     MPI_Finalize();
 }

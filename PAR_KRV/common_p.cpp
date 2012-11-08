@@ -14,7 +14,7 @@
 #define MSG_TOKEN        1003
 #define MSG_FINISH       1004
 #define MSG_BEST_RESULT  1005
-#define LOGGER 0
+#define LOGGER 1
 
 
 MPI_Status status;
@@ -57,9 +57,9 @@ void masPraciMessage(int rank, int dest) {
 }
 // odpoved, mam pripravenou praci, posilam container c
 
-void mamPraciMessage(int rank, int dest, Container * c) {
-    sendMessage(rank, MSG_WORK_SENT, dest);
-    sendContainer(c, dest);
+void mamPraciMessage(int sum, int dest) {
+    sendMessage(sum, MSG_WORK_SENT, dest);
+    
 }
 // odpoved, nemam zadnou praci
 
@@ -78,11 +78,11 @@ void sendToken(int color, int dest) {
     sendMessage(color, MSG_TOKEN, dest);
 }
 
-void logToFile(int rank, string message) {
+void logToFile(int rank,int rs, string message) {
     if (LOGGER == 1) {
         ofstream myfile;
         char * name = new char[10];
-        sprintf(name, "%d.txt", rank);
+        sprintf(name, "%d_%d.txt", rs,rank);
         myfile.open(name, ios::out | ios::app);
         myfile << message;
         myfile.close();
@@ -111,7 +111,7 @@ string itos(int i) {
 void bestResultMessage(int rank, int ranksize, Container * bestResult) {
     for (int i = 0; i < ranksize; i++) {
         if (i != rank) {
-            logToFile(rank, itos(rank) + "odesila best: " + itos(bestResult->getResult()) + " na " + itos(i) + "\n");
+            logToFile(rank,ranksize, itos(rank) + "odesila best: " + itos(bestResult->getResult()) + " na " + itos(i) + "\n");
             sendMessage(rank, MSG_BEST_RESULT, i);
             sendContainer(bestResult, i);
         }
